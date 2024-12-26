@@ -1,7 +1,5 @@
 package com.patricio.contreras.domain.entity;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,15 +14,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tipos_alarmas")
-public class TipoAlarma {
-
+@Table(name = "furgones")
+public class Furgon {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nombre_alarma",nullable=false)
-	private String nombreAlarma;
+	@Column(name = "patente", nullable = false)
+	private String patente;
 	
-	
+	@Column( name = "descripcion",nullable = false)
+	private String descripcion;
+
 }
