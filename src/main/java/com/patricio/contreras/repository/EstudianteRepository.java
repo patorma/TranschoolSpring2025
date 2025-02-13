@@ -8,6 +8,6 @@ import com.patricio.contreras.domain.entity.Estudiante;
 
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long>{
 	
-   Optional<Estudiante> findByName(String nombres);
+   Optional<Estudiante> findByNombres(String nombres);
 
 }

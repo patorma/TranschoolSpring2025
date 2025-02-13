@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.patricio.contreras.domain.entity.Pago;
+import com.patricio.contreras.domain.enums.Estado;
 import com.patricio.contreras.dto.response.PagoResponseDTO;
 import com.patricio.contreras.exception.ResourceNotFoundException;
 import com.patricio.contreras.mapper.PagoMapper;
@@ -33,14 +34,14 @@ public class PagoService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<PagoResponseDTO> getPagoByState(String estado,Pageable pageable){
+	public Page<PagoResponseDTO> getPagoByState(Estado estado,Pageable pageable){
 		Page<Pago> pagos = pagoRepository.findByEstado(estado,pageable);
 		return pagos.map(pagoMapper::toResponseDTO);
 		 
 	}
 	
 	
-	public PagoResponseDTO getPgoById(Long id) {
+	public PagoResponseDTO getPagoById(Long id) {
 		Pago pago = pagoRepository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Pago not found with id:" + id));
 		return pagoMapper.toResponseDTO(pago);

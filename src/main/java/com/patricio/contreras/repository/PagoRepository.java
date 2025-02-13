@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.patricio.contreras.domain.entity.Alarma;
+
 import com.patricio.contreras.domain.entity.Pago;
+import com.patricio.contreras.domain.enums.Estado;
 
 public interface PagoRepository extends JpaRepository<Pago, Long> {
 
@@ -22,7 +23,7 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
 	 * 
 	 * */
 	@Query("SELECT p FROM Pago p WHERE p.estado = :estado")
-	Page<Pago> findByEstado(@Param("estado") String estado,Pageable pageable);
+	Page<Pago> findByEstado(@Param("estado") Estado estado,Pageable pageable);
 	
 	@Query("SELECT p FROM Pago p WHERE p.usuario.id = :userId")
     Page<Pago> findByUserId(@Param("userId") Long userId,Pageable pageable);

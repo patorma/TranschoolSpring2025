@@ -27,16 +27,9 @@ public class Recorrido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "origen",nullable = false)
-	private String origen;
+	@Column(name = "descripcion")
+	private String descripcion;
 	
-	@Column(name = "destino",nullable = false)
-	private String destino;
-	
-	@ManyToOne
-	@JoinColumn(name = "furgon_id",nullable = false)
-	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
-	private Furgon furgon;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "estudiante_id",nullable = false,referencedColumnName = "id")

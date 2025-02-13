@@ -15,6 +15,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,9 +37,12 @@ public class Pago {
 	private int monto;
 	
 	@Column(name = "fecha_vencimiento",nullable = false)
+	@NotNull(message = "no puede estar vacia la fecha")
+	@Temporal(TemporalType.DATE)
 	private Date fechaVencimiento; 
 	
 	@Column(name = "fecha_pago",nullable = true)
+	@Temporal(TemporalType.DATE)
 	private Date fechaPago;
 	
 	@Enumerated(EnumType.STRING)

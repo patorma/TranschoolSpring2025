@@ -19,5 +19,6 @@ public class PagoResponseDTO {
 	
 	private Estado estado;
 	
-	private String userName;
+	private String usuarioNombres;
+	private Long usuarioId;
 }

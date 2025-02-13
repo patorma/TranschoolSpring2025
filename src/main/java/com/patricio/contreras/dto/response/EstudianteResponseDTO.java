@@ -13,5 +13,5 @@ public class EstudianteResponseDTO {
 	
 	private String colegio;
 	
-	private String recorridoName;
+	private String recorridoDescripcion;
 }

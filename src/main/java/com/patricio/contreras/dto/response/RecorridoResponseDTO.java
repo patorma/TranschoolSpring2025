@@ -7,12 +7,13 @@ public class RecorridoResponseDTO {
 	
 	private Long id;
 	
-	private String origen;
+	private String descripcion;
+
+	private Long estudianteId;
+	private String  estudianteNombres;
 	
-	private String destino;
+	private String estudianteApellidos;
 	
-	private String  estudianteName;
-	
-	private String furgonName;
+	private String furgonPatente;
 
 }

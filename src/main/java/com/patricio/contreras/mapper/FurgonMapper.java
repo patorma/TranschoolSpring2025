@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.patricio.contreras.domain.entity.Furgon;
 import com.patricio.contreras.dto.response.FurgonResponseDTO;
-
+import com.patricio.contreras.dto.resquest.FurgonRequestDTO;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,6 +15,10 @@ import lombok.RequiredArgsConstructor;
 public class FurgonMapper {
 
 	private final ModelMapper modelMapper;
+	
+	public Furgon toEntity(FurgonRequestDTO furgonRequestDTO) {
+		return modelMapper.map(furgonRequestDTO, Furgon.class);
+	}
 	
 	public FurgonResponseDTO toResponseDTO(Furgon furgon) {
 		return modelMapper.map(furgon, FurgonResponseDTO.class);
@@ -25,4 +29,6 @@ public class FurgonMapper {
 					.map(this::toResponseDTO)
 					.toList();
 	}
+	
+
 }

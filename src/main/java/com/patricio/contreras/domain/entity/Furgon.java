@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +24,13 @@ public class Furgon {
 	private Long id;
 	
 	@Column(name = "patente", nullable = false)
+	@NotNull
+	@Size(min = 4)
 	private String patente;
 	
 	@Column( name = "descripcion",nullable = false)
+	@NotNull
+	@Size(min = 20)
 	private String descripcion;
 
 }
