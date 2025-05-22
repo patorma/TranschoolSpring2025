@@ -1,6 +1,7 @@
 package com.patricio.contreras.domain.entity;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.patricio.contreras.domain.enums.Estado;
@@ -52,5 +53,25 @@ public class Pago {
 	@JoinColumn(name = "user_id",nullable = false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
 	private User usuario;
+	
+	/*@Column(name = "total_pago",nullable = false)
+//	private int totalPago;
 
+	/*public int getMontoConMulta() {
+		 if (fechaPago == null) {
+			 this.totalPago = monto;
+		        return this.totalPago ; // Si aún no se ha pagado, devolver el monto original
+		    }
+		 long diferenciaEnMs = fechaPago.getTime() - fechaVencimiento.getTime();
+		    long diasRetraso = TimeUnit.DAYS.convert(diferenciaEnMs, TimeUnit.MILLISECONDS);
+
+		    if (diasRetraso > 10) {
+		        double multa = monto * 0.10; // 10% de multa
+		        this.totalPago =  monto + (int) multa;
+		        return this.totalPago;
+		    }
+
+		    return this.totalPago;
+	}*/
+	
 }

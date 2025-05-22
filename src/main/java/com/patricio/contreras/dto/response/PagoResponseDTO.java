@@ -17,6 +17,8 @@ public class PagoResponseDTO {
 	
 	private Date fechaPago;
 	
+	private int totalPago;
+	
 	private Estado estado;
 	
 	private String usuarioNombres;

@@ -23,6 +23,8 @@ public class PagoService {
 	
 	private final PagoMapper pagoMapper;
 	
+	//quede aca
+/**/
 	
 	@Transactional(readOnly = true)
 	public Page<PagoResponseDTO> getAllPagos(Pageable pageable){

@@ -14,6 +14,6 @@ public class RecorridoResponseDTO {
 	
 	private String estudianteApellidos;
 	
-	private String furgonPatente;
+	
 
 }

@@ -23,7 +23,7 @@ public class Furgon {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "patente", nullable = false)
+	@Column(name = "patente", nullable = false,unique = true)
 	@NotNull
 	@Size(min = 4)
 	private String patente;

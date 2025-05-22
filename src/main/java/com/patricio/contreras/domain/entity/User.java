@@ -33,7 +33,7 @@ public class User {
 	private String comuna;
 	
 	@Column(name = "telefono",nullable = false)
-	private int telefono;
+	private String telefono;
 	
 	@Column(name = "email",nullable = false)
 	private String email;

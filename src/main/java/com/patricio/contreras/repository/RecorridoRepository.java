@@ -14,6 +14,5 @@ public interface RecorridoRepository extends JpaRepository<Recorrido, Long> {
 	@Query("SELECT r FROM Recorrido r WHERE r.estudiante.id = :estudianteId")
 	Page<Recorrido> findByEstudianteId(@Param("estudianteId") Long estudianteId,Pageable pageable);
 	
-	@Query("SELECT r FROM Recorrido r WHERE r.furgon.id = :furgonId")
-    Page<Recorrido> findByFurgonId(@Param("furgonId") Long furgonId, Pageable pageable);
+	
 }

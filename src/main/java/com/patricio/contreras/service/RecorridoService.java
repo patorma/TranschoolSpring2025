@@ -39,12 +39,7 @@ public class RecorridoService {
 	   return  recorridosByIdEstudiante .map(recorridoMapper::toResponseDTO);
 	   
    }
-   
-   @Transactional(readOnly = true)
-   public Page<RecorridoResponseDTO> getRecorridoByIdFurgon(Long id, Pageable pageable){
-	   Page<Recorrido>  recorridosByIdFurgon = recorridoRepository.findByFurgonId(id, pageable);
-	   return recorridosByIdFurgon.map(recorridoMapper::toResponseDTO);
-   }
+ 
    
    
    
