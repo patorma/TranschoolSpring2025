@@ -23,12 +23,14 @@ public class AuthController {
 
 	 private final UserService userService;
 
+	 //para que inicie sesion el usuario
 	  @PostMapping("/sign-in")
 	  public ResponseEntity<AuthResponseDTO> signIn(@RequestBody AuthRequestDTO authRequest) {
 	    AuthResponseDTO authResponse = userService.signIn(authRequest);
 	    return new ResponseEntity<>(authResponse, HttpStatus.OK);
 	  }
 
+	  //para registrar  un usuario
 	  @PostMapping("/sign-up")
 	  public ResponseEntity<UserProfileResponseDTO> register(@RequestBody @Validated SignupRequestDTO signupRequestDTO) {
 	    UserProfileResponseDTO userProfileResponseDTO = userService.signup(signupRequestDTO);
