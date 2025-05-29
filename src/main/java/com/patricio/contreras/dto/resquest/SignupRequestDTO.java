@@ -1,5 +1,7 @@
 package com.patricio.contreras.dto.resquest;
 
+import com.patricio.contreras.domain.enums.Role;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,4 +31,8 @@ public class SignupRequestDTO {
 		@NotNull(message = "Password is mandatory" )
 		@Size(min = 4)
 		private String password;
+		
+		//es ignorada en la ruta pública del uysuario
+		@NotNull(message = "Role is mandatory" )
+		private Role role;
 }

@@ -54,10 +54,10 @@ public class Pago {
 	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
 	private User usuario;
 	
-	/*@Column(name = "total_pago",nullable = false)
-//	private int totalPago;
+	@Column(name = "total_pago",nullable = false)
+	private int totalPago;
 
-	/*public int getMontoConMulta() {
+	public int getMontoConMulta() {
 		 if (fechaPago == null) {
 			 this.totalPago = monto;
 		        return this.totalPago ; // Si aún no se ha pagado, devolver el monto original
@@ -72,6 +72,6 @@ public class Pago {
 		    }
 
 		    return this.totalPago;
-	}*/
+	}
 	
 }

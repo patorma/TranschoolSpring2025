@@ -67,7 +67,7 @@ public class UserService {
 
 	    User user = userMapper.toUser(signupFormDTO);
 	    user.setPassword(passwordEncoder.encode(signupFormDTO.getPassword()));
-	    user.setRole(Role.ADMIN);
+	    user.setRole(Role.APODERADO);//se pone como defecto el usuario ADMIN
 
 	    userRepository.save(user);
 

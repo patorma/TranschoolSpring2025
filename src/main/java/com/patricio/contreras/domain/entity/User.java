@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -41,6 +42,8 @@ public class User {
 	@Column(name = "password",nullable = false)
 	private String password;
 	
+	@Column(name = "role",nullable=false)
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Role role;
 }
