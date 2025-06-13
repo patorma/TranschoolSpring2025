@@ -1,5 +1,6 @@
 package com.patricio.contreras.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -42,10 +43,22 @@ public class WebSecurityConfig {
 	        // Permite el acceso sin autenticación a las rutas de documentación Swagger.
 	        .requestMatchers("/api/v1/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
             .requestMatchers("/asignaciones/**").hasRole("ADMIN") // Requiere rol ADMIN para /asignaciones/**
+				  .requestMatchers("/auth/admin/**").hasRole("ADMIN")	  // Requiere rol ADMIN.
 	        // Requiere autenticación para cualquier otra solicitud.
 	        .anyRequest()
 	        .authenticated()
 	      )
+				.exceptionHandling(ex ->ex
+						.authenticationEntryPoint((request, response, authException) -> {
+							response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+							response.setContentType("application/json");
+							response.getWriter().write("{\"error\": \"Debe estar autenticado para acceder\"}");
+						})
+						.accessDeniedHandler((request,response,accessDeniedException)->{
+							response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+							response.setContentType("application/json");
+							response.getWriter().write("{\"error\": \"Solo un usuario Administrador puede acceder a este recurso\"}");
+						}))
 
 	      // Configura la gestión de sesiones para que no se guarden en el servidor.
 	      .sessionManagement(h -> h.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

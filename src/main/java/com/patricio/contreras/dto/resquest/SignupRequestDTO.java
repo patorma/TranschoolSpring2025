@@ -7,11 +7,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-//registro de usuario lo que se va enviar
+//registro de usuario lo que se va enviar S
 @Data
 public class SignupRequestDTO {
 
-	//@NotBlank indica que el atributo es obligatorio
+	//@NotBlank indica que el atributo es obligatorio DGDGD
 		@NotBlank
 		private String nombres;
 		
@@ -33,6 +33,6 @@ public class SignupRequestDTO {
 		private String password;
 		
 		//es ignorada en la ruta pública del uysuario
-		@NotNull(message = "Role is mandatory" )
-		private Role role;
+		/*@NotNull(message = "Role is mandatory" )
+		private Role role  ;*/
 }

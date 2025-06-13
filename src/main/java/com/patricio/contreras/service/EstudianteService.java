@@ -23,7 +23,7 @@ public class EstudianteService {
 	@Transactional(readOnly = true)
 	public List<EstudianteResponseDTO> getAllEstudiantes(){
 		
-		List<Estudiante> estudiantes = estudianteRepository.findAll();
+		List<Estudiante> estudiantes  = estudianteRepository.findAll();
 		
 		return estudianteMapper.toResponseDTOList(estudiantes);
 	}

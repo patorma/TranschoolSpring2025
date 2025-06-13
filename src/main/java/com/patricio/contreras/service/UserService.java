@@ -1,5 +1,6 @@
 package com.patricio.contreras.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -23,10 +24,14 @@ import com.patricio.contreras.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class UserService {
 
 	  private final UserRepository userRepository;
+
+
+	  //Para encodear el password
 	  private final PasswordEncoder passwordEncoder;
 	  private final UserMapper userMapper;
 
@@ -67,13 +72,29 @@ public class UserService {
 
 	    User user = userMapper.toUser(signupFormDTO);
 	    user.setPassword(passwordEncoder.encode(signupFormDTO.getPassword()));
-	    user.setRole(Role.APODERADO);//se pone como defecto el usuario ADMIN
+	    user.setRole(Role.APODERADO);//se pone como defecto el usuario  como apoderado
 
 	    userRepository.save(user);
 
 	    return userMapper.toUserProfileResponseDTO(user);
 	  }
 
+//Registrar tipo usuario transportista por parte de admin
+   @Transactional
+	public UserProfileResponseDTO signupAdmin(SignupRequestDTO signupAdminFormDTO){
+
+	   boolean emailAlreadyExists = userRepository.existsByEmail(signupAdminFormDTO.getEmail());
+
+	   if (emailAlreadyExists) {
+		   throw new BadRequestException("El email ya esta asociado a un transportista!!!!!.");
+	   }
+	   User user = userMapper.toUser(signupAdminFormDTO);
+	   user.setPassword(passwordEncoder.encode(signupAdminFormDTO.getPassword()));
+	   user.setRole(Role.TRANSPORTISTA);//se pone como defecto el usuario como transportista para el administrador
+
+	   userRepository.save(user);
+	   return userMapper.toUserProfileResponseDTO(user);
+   }
 
 	  @Transactional(readOnly = true)
 	  public UserProfileResponseDTO findByEmail(String email) {

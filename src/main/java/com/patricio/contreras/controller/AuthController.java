@@ -2,6 +2,7 @@ package com.patricio.contreras.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,4 +37,15 @@ public class AuthController {
 	    UserProfileResponseDTO userProfileResponseDTO = userService.signup(signupRequestDTO);
 	    return new ResponseEntity<>(userProfileResponseDTO, HttpStatus.CREATED);
 	  }
+
+	  // para registrar un usuario transportista por parte del admin
+	  @PreAuthorize("hasRole('ADMIN')")
+      @PostMapping("/admin/sign-up")
+	  public ResponseEntity<UserProfileResponseDTO> registerAdmin(@RequestBody @Validated SignupRequestDTO signupAdminRequestDTO){
+         UserProfileResponseDTO userProfileResponseDTO = userService.signupAdmin(signupAdminRequestDTO);
+
+		 return new ResponseEntity<>(userProfileResponseDTO, HttpStatus.CREATED);
+	  }
+
+
 }
