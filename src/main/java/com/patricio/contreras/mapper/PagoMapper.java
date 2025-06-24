@@ -2,6 +2,7 @@ package com.patricio.contreras.mapper;
 
 import java.util.List;
 
+import com.patricio.contreras.dto.resquest.PagoRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -27,4 +28,9 @@ public class PagoMapper {
 				
 		
 	}
+   public Pago toEntity(PagoRequestDTO pagoRequestDTO){
+		return modelMapper.map(pagoRequestDTO,Pago.class);
+   }
+
+
 }

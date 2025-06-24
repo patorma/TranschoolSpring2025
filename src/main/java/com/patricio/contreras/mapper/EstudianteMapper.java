@@ -2,6 +2,7 @@ package com.patricio.contreras.mapper;
 
 import java.util.List;
 
+import com.patricio.contreras.dto.resquest.EstudianteRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,10 @@ import lombok.RequiredArgsConstructor;
 public class EstudianteMapper {
 	
 	private final ModelMapper modelMapper;
+
+	public Estudiante toEntity(EstudianteRequestDTO estudianteRequestDTO){
+        return modelMapper.map(estudianteRequestDTO,Estudiante.class);
+	}
 	
 	public EstudianteResponseDTO toResponseDTO(Estudiante estudiante) {
 		return modelMapper.map(estudiante, EstudianteResponseDTO.class);

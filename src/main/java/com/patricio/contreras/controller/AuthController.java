@@ -32,20 +32,13 @@ public class AuthController {
 	  }
 
 	  //para registrar  un usuario
-	  @PostMapping("/sign-up")
+	  @PostMapping("/sign-up-2")
 	  public ResponseEntity<UserProfileResponseDTO> register(@RequestBody @Validated SignupRequestDTO signupRequestDTO) {
 	    UserProfileResponseDTO userProfileResponseDTO = userService.signup(signupRequestDTO);
 	    return new ResponseEntity<>(userProfileResponseDTO, HttpStatus.CREATED);
 	  }
 
-	  // para registrar un usuario transportista por parte del admin
-	  @PreAuthorize("hasRole('ADMIN')")
-      @PostMapping("/admin/sign-up")
-	  public ResponseEntity<UserProfileResponseDTO> registerAdmin(@RequestBody @Validated SignupRequestDTO signupAdminRequestDTO){
-         UserProfileResponseDTO userProfileResponseDTO = userService.signupAdmin(signupAdminRequestDTO);
 
-		 return new ResponseEntity<>(userProfileResponseDTO, HttpStatus.CREATED);
-	  }
 
 
 }

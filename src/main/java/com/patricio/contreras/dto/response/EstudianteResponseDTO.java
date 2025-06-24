@@ -12,6 +12,8 @@ public class EstudianteResponseDTO {
 	private String apellidos;
 	
 	private String colegio;
+
+	private  String email;
 	
-	private String recorridoDescripcion;
+	//private String recorridoDescripcion;
 }

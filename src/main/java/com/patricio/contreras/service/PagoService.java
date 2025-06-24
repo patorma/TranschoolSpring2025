@@ -1,5 +1,6 @@
 package com.patricio.contreras.service;
 
+import com.patricio.contreras.dto.resquest.PagoRequestDTO;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
@@ -54,6 +55,17 @@ public class PagoService {
 		Page<Pago> pagosByIdUser = pagoRepository.findByUserId(id,pageable);
 		return pagosByIdUser.map(pagoMapper::toResponseDTO);
 		
+	}
+	@Transactional
+	public PagoResponseDTO createPago(PagoRequestDTO pagoRequestDTO){
+		Pago pago = pagoMapper.toEntity(pagoRequestDTO);
+		pago.setMonto(pago.getMonto());
+		pago.setFechaVencimiento(pago.getFechaVencimiento());
+		pago.setEstado(pago.getEstado());
+		pago.setUsuario(pago.getUsuario());
+		pago = pagoRepository.save(pago);
+
+		return pagoMapper.toResponseDTO(pago);
 	}
 	
 	

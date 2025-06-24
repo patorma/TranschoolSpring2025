@@ -38,12 +38,14 @@ public class Estudiante {
 	private String apellidos;
 	
 	@Column(name = "fecha_nacimiento",nullable = false)
-	@NotNull(message = "no puede estar vacia la fecha de nacimiento")
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
 	@Column(name = "colegio",nullable = false)
 	private String colegio;
+
+	@Column(name = "email",nullable = false,unique = true)
+	private String email;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id",nullable = false)

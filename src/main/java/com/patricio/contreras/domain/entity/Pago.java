@@ -38,7 +38,6 @@ public class Pago {
 	private int monto;
 	
 	@Column(name = "fecha_vencimiento",nullable = false)
-	@NotNull(message = "no puede estar vacia la fecha")
 	@Temporal(TemporalType.DATE)
 	private Date fechaVencimiento; 
 	
