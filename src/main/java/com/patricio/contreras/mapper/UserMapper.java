@@ -11,6 +11,8 @@ import com.patricio.contreras.dto.resquest.SignupRequestDTO;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
@@ -32,6 +34,12 @@ public class UserMapper {
 		authResponseDTO.setUser(userProfile);
 		
 		return authResponseDTO;
+	}
+
+	public List<UserProfileResponseDTO> toUserProfileResponseDTOList(List<User> users) {
+		return users.stream()
+				.map(this::toUserProfileResponseDTO)
+				.toList();
 	}
 
 }

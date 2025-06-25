@@ -63,6 +63,7 @@ public class PagoService {
 		pago.setFechaVencimiento(pago.getFechaVencimiento());
 		pago.setEstado(pago.getEstado());
 		pago.setUsuario(pago.getUsuario());
+		pago.getMontoConMulta();
 		pago = pagoRepository.save(pago);
 
 		return pagoMapper.toResponseDTO(pago);

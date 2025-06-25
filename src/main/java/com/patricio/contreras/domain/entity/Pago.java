@@ -39,11 +39,11 @@ public class Pago {
 	
 	@Column(name = "fecha_vencimiento",nullable = false)
 	@Temporal(TemporalType.DATE)
-	private Date fechaVencimiento; 
+	private  Date fechaVencimiento;
 	
 	@Column(name = "fecha_pago",nullable = true)
 	@Temporal(TemporalType.DATE)
-	private Date fechaPago;
+	private  Date fechaPago;
 	
 	@Enumerated(EnumType.STRING)
 	private Estado estado;

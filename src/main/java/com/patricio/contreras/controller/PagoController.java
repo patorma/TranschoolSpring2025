@@ -49,6 +49,7 @@ public class PagoController {
 		return ResponseEntity.ok(pago);
 	}
 
+	//probar mañana
 	@PostMapping("pago")
     public ResponseEntity<PagoResponseDTO> createPago(
 			@RequestBody @Validated PagoRequestDTO pagoRequestDTO

@@ -1,5 +1,7 @@
 package com.patricio.contreras.service;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +24,8 @@ import com.patricio.contreras.repository.UserRepository;
 import com.patricio.contreras.security.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -103,5 +107,12 @@ public class UserService {
 
 	    return userMapper.toUserProfileResponseDTO(user);
 	  }
+
+	  @Transactional(readOnly = true)
+	  public List<UserProfileResponseDTO> getUsuariosSinAdmin() {
+
+		List<User> usuarios = userRepository.findByRoleNot(Role.ADMIN);
+		return userMapper.toUserProfileResponseDTOList(usuarios);
+	}
 
 }
