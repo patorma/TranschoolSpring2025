@@ -1,9 +1,12 @@
 package com.patricio.contreras.service;
 
 import com.patricio.contreras.dto.resquest.PagoRequestDTO;
+import com.patricio.contreras.security.UserDetailsServiceImpl;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +59,11 @@ public class PagoService {
 		return pagosByIdUser.map(pagoMapper::toResponseDTO);
 		
 	}
+	/*@Transactional(readOnly = true)
+	public Page<PagoResponseDTO> obtenerPagos(Pageable pageable){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsServiceImpl
+	}*/
 	@Transactional
 	public PagoResponseDTO createPago(PagoRequestDTO pagoRequestDTO){
 		Pago pago = pagoMapper.toEntity(pagoRequestDTO);

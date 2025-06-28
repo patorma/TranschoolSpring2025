@@ -40,7 +40,7 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests((authz) -> authz
 						// ¡IMPORTANTE! Coloca las rutas permitAll() al principio.
 						// Permite el acceso sin autenticación a las rutas de registro y autenticación.
-						.requestMatchers("/auth/sign-up-2", "/auth/sign-in").permitAll()
+						.requestMatchers("/auth/sign-up-2", "/auth/sign-in","/auth/crear").permitAll()
 						// Permite el acceso sin autenticación a las rutas de documentación Swagger.
 						.requestMatchers("/api/v1/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
 						.requestMatchers("/asignaciones/**").hasRole("ADMIN") // Requiere rol ADMIN para /asignaciones/**

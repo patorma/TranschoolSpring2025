@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class PagoController {
 
 	private final PagoService pagoService;
-	
-	@GetMapping("/page")
-	public ResponseEntity<Page<PagoResponseDTO>> getAllPagos(
-			@PageableDefault(size = 5)Pageable pageable){
-		Page<PagoResponseDTO> pagos = pagoService.getAllPagos(pageable);
-		return ResponseEntity.ok(pagos);
-	}
-	
+
 	@GetMapping("/page/state")
 	public ResponseEntity<Page<PagoResponseDTO>> findByyState(
 			@RequestParam Estado state_pago,@PageableDefault(sort = "estado",size = 5) Pageable pageable){
@@ -49,14 +43,8 @@ public class PagoController {
 		return ResponseEntity.ok(pago);
 	}
 
-	//probar mañana
-	@PostMapping("pago")
-    public ResponseEntity<PagoResponseDTO> createPago(
-			@RequestBody @Validated PagoRequestDTO pagoRequestDTO
-			){
-		PagoResponseDTO pagoResponseDTO = pagoService.createPago(pagoRequestDTO);
-		return new ResponseEntity<>(pagoResponseDTO, HttpStatus.CREATED);
-	}
+
+
 
 
 }

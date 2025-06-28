@@ -1,5 +1,6 @@
 package com.patricio.contreras.service;
 
+import com.patricio.contreras.dto.resquest.UpdateUserRequestDTO;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +83,39 @@ public class UserService {
 
 	    return userMapper.toUserProfileResponseDTO(user);
 	  }
+	@Transactional
+	public UserProfileResponseDTO crearUsuario(SignupRequestDTO signupFormDTO){
+		boolean emailAlreadyExists = userRepository.existsByEmail(signupFormDTO.getEmail());
 
+		if (emailAlreadyExists) {
+			throw new BadRequestException("El email ya está siendo usado por otro usuario.");
+		}
+
+		User user = userMapper.toUser(signupFormDTO);
+		user.setPassword(passwordEncoder.encode(signupFormDTO.getPassword()));
+		user.setRole(Role.APODERADO);
+		userRepository.save(user);
+		return userMapper.toUserProfileResponseDTO(user);
+	}
+
+	//Update de usuarios
+	@Transactional
+	public UserProfileResponseDTO updateUsuario(Long id, UpdateUserRequestDTO dto){
+       User user = userRepository.findById(id)
+			   .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+
+		if (dto.getNombres() != null) user.setNombres(dto.getNombres());
+		if (dto.getApellidos() != null) user.setApellidos(dto.getApellidos());
+		if (dto.getComuna() != null) user.setComuna(dto.getComuna());
+		if (dto.getTelefono() != null) user.setTelefono(dto.getTelefono());
+		if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+		if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+			user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		}
+		userRepository.save(user);
+		return userMapper.toUserProfileResponseDTO(user);
+
+	}
 //Registrar tipo usuario transportista por parte de admin
    @Transactional
 	public UserProfileResponseDTO signupAdmin(SignupRequestDTO signupAdminFormDTO){

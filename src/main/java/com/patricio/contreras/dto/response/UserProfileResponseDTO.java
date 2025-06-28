@@ -12,8 +12,11 @@ public class UserProfileResponseDTO {
 	private String nombres;
 	
 	private String apellidos;
-	
+
+	public String comuna;
 	private String email;
 	//se elimino el role  ff
-	//private Role role;
+	private Role role;
+
+
 }

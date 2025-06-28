@@ -27,5 +27,7 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
 	
 	@Query("SELECT p FROM Pago p WHERE p.usuario.id = :userId")
     Page<Pago> findByUserId(@Param("userId") Long userId,Pageable pageable);
+
+
 	
 }
