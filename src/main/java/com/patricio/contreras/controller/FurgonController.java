@@ -47,7 +47,7 @@ public class FurgonController {
 	public ResponseEntity<?> deleteFurgon(@PathVariable Long id){
 		Map<String, Object> response = new HashMap<>();
 		 furgonService.deleteFurgon(id);
-		 response.put("mensaje", "El gasto fue eliminado con éxito!");
+		 response.put("mensaje", "El furgon fue eliminado con éxito!");
 		 return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
 	}
 
