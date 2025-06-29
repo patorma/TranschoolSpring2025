@@ -1,10 +1,12 @@
 package com.patricio.contreras.controller;
 
+import com.patricio.contreras.dto.response.FurgonResponseDTO;
 import com.patricio.contreras.dto.response.PagoResponseDTO;
 import com.patricio.contreras.dto.response.UserProfileResponseDTO;
 import com.patricio.contreras.dto.resquest.PagoRequestDTO;
 import com.patricio.contreras.dto.resquest.SignupRequestDTO;
 import com.patricio.contreras.dto.resquest.UpdateUserRequestDTO;
+import com.patricio.contreras.service.FurgonService;
 import com.patricio.contreras.service.PagoService;
 import com.patricio.contreras.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,10 @@ import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+
     private final UserService userService;
     private final PagoService pagoService;
+    private final FurgonService furgonService;
 
     // para registrar un usuario transportista por parte del admin
     @PreAuthorize("hasRole('ADMIN')")
@@ -69,4 +73,12 @@ public class AdminController {
         UserProfileResponseDTO userProfileResponseDTO = userService.updateUsuario(id,signupDTO);
         return new ResponseEntity<>(userProfileResponseDTO ,HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/furgones")
+    public ResponseEntity<List<FurgonResponseDTO>> getAllFurgones(){
+        List<FurgonResponseDTO> furgones = furgonService.getAllFurgones();
+        return ResponseEntity.ok(furgones);
+    }
+
 }

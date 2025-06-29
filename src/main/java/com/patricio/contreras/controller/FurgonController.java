@@ -28,11 +28,11 @@ public class FurgonController {
 
 	private final FurgonService furgonService;
 
-	@GetMapping
+/*	@GetMapping
 	public ResponseEntity<List<FurgonResponseDTO>> getAllFurgones(){
 		List<FurgonResponseDTO> furgones = furgonService.getAllFurgones();
 		return ResponseEntity.ok(furgones);
-	}
+	}*/
 	
 	@PostMapping("/input")
 	public ResponseEntity<FurgonResponseDTO> createFurgon(

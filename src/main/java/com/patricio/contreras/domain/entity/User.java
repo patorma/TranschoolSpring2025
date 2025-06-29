@@ -2,14 +2,7 @@ package com.patricio.contreras.domain.entity;
 
 import com.patricio.contreras.domain.enums.Role;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,4 +39,7 @@ public class User {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@OneToOne(mappedBy = "usuarioTransportista",fetch = FetchType.LAZY)
+	private Furgon furgon;
 }

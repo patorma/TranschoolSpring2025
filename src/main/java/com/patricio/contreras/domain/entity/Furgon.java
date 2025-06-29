@@ -1,11 +1,6 @@
 package com.patricio.contreras.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -32,5 +27,10 @@ public class Furgon {
 	@NotNull
 	@Size(min = 20)
 	private String descripcion;
+
+//esta entidad tendra el id del usuario transportista asignado
+	@OneToOne
+	@JoinColumn(name = "usuario_transportista_id", nullable = false, unique = true)
+	private User usuarioTransportista;
 
 }
