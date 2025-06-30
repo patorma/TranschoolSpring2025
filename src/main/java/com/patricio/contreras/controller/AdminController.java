@@ -3,6 +3,7 @@ package com.patricio.contreras.controller;
 import com.patricio.contreras.dto.response.FurgonResponseDTO;
 import com.patricio.contreras.dto.response.PagoResponseDTO;
 import com.patricio.contreras.dto.response.UserProfileResponseDTO;
+import com.patricio.contreras.dto.resquest.FurgonRequestDTO;
 import com.patricio.contreras.dto.resquest.PagoRequestDTO;
 import com.patricio.contreras.dto.resquest.SignupRequestDTO;
 import com.patricio.contreras.dto.resquest.UpdateUserRequestDTO;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 import org.springframework.data.domain.Pageable;
@@ -79,6 +82,25 @@ public class AdminController {
     public ResponseEntity<List<FurgonResponseDTO>> getAllFurgones(){
         List<FurgonResponseDTO> furgones = furgonService.getAllFurgones();
         return ResponseEntity.ok(furgones);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/furgon")
+    public ResponseEntity<FurgonResponseDTO> createFurgon(
+            @RequestBody @Validated FurgonRequestDTO furgonRequestDTO
+    ){
+        FurgonResponseDTO furgonResponseDTO = furgonService
+                .CreateFurgon(furgonRequestDTO);
+        return new ResponseEntity<>(furgonResponseDTO,HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("furgon/elimina/{id}")
+    public ResponseEntity<?> deleteFurgon(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        furgonService.deleteFurgon(id);
+        response.put("mensaje", "El furgon fue eliminado con éxito!");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
     }
 
 }

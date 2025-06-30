@@ -2,6 +2,10 @@ package com.patricio.contreras.service;
 
 import java.util.List;
 
+import com.patricio.contreras.domain.entity.User;
+import com.patricio.contreras.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +26,28 @@ public class FurgonService {
 	private final FurgonRepository  furgonRepository;
 	
 	private final FurgonMapper furgonMapper;
+
+	private final UserRepository userRepository;
 	
 	@Transactional(readOnly = true)
 	public List<FurgonResponseDTO> getAllFurgones(){
 		List<Furgon> furgones = furgonRepository.findAll();
 		
 		return furgonMapper.toResponseDTOList(furgones);
-	} 
+	}
+
+	@Transactional(readOnly = true)
+	public FurgonResponseDTO getMyFurgon(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+
+		User user = userRepository.findOneByEmail(email)
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+
+		Furgon furgon = furgonRepository.findByUsuarioTransportista_Id(user.getId())
+				.orElseThrow(()-> new ResourceNotFoundException("No tienes un furgon asignado"));
+		return furgonMapper.toResponseDTO(furgon);
+	}
 
 	@Transactional
 	public FurgonResponseDTO CreateFurgon(FurgonRequestDTO furgonRequestDTO) {

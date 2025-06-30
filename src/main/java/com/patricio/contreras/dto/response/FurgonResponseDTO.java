@@ -10,4 +10,12 @@ public class FurgonResponseDTO {
 	private String patente;
 	
 	private String descripcion;
+
+	private Long usuarioTransportistaId;
+
+	private String usuarioNombres;
+
+	private String usuarioApellidos;
+
+	private String usuarioRole;
 }

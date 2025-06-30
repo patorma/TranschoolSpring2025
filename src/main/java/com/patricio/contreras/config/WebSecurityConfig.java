@@ -44,7 +44,8 @@ public class WebSecurityConfig {
 						// Permite el acceso sin autenticación a las rutas de documentación Swagger.
 						.requestMatchers("/api/v1/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
 						.requestMatchers("/asignaciones/**").hasRole("ADMIN") // Requiere rol ADMIN para /asignaciones/**
-						.requestMatchers("/admin/**").hasRole("ADMIN")    // Requiere rol ADMIN.
+						.requestMatchers("/admin/**").hasRole("ADMIN")    // Requiere rol ADMIN.+
+						.requestMatchers("/furgones/**").hasRole("TRANSPORTISTA")
 						// Requiere autenticación para cualquier otra solicitud.
 						.anyRequest()
 						.authenticated()
@@ -58,7 +59,7 @@ public class WebSecurityConfig {
 						.accessDeniedHandler((request,response,accessDeniedException)->{
 							response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 							response.setContentType("application/json");
-							response.getWriter().write("{\"error\": \"Solo un usuario Administrador puede acceder a este recurso\"}");
+							response.getWriter().write("{\"error\": \"Usted no tiene permiso para acceder a este recurso\"}");
 						}))
 
 				// Configura la gestión de sesiones para que no se guarden en el servidor.

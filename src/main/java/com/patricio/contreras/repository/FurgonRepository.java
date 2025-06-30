@@ -15,6 +15,6 @@ public interface FurgonRepository extends JpaRepository<Furgon, Long>{
 	
 	
 	Optional<Furgon> findByPatente (String furgones);
-//quede aca 
+//quede aca
 	Optional<Furgon> findByUsuarioTransportista_Id(Long usuarioId);
 }

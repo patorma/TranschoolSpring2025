@@ -13,4 +13,7 @@ public class FurgonRequestDTO{
 	
 	@NotNull(message = "La descripcion es requerida")
 	private String descripcion;
+	//usuario_transportista_id
+	@NotNull(message = "El id del transportista es obligatorio")
+	private Long usuarioTransportistaId;
 }
