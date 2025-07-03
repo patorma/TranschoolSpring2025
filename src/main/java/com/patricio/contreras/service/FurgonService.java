@@ -1,8 +1,12 @@
 package com.patricio.contreras.service;
 
+
 import java.util.List;
 
+
 import com.patricio.contreras.domain.entity.User;
+import com.patricio.contreras.dto.resquest.UpdateFurgonRequestDTO;
+import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +35,7 @@ public class FurgonService {
 	
 	@Transactional(readOnly = true)
 	public List<FurgonResponseDTO> getAllFurgones(){
-		List<Furgon> furgones = furgonRepository.findAll();
+		List<Furgon> furgones = furgonRepository.findAllEnabled();
 		
 		return furgonMapper.toResponseDTOList(furgones);
 	}
@@ -51,13 +55,46 @@ public class FurgonService {
 
 	@Transactional
 	public FurgonResponseDTO CreateFurgon(FurgonRequestDTO furgonRequestDTO) {
-		Furgon furgon = furgonMapper.toEntity(furgonRequestDTO);
-		furgon.setPatente(furgon.getPatente());
-		furgon.setDescripcion(furgon.getDescripcion());
-		
-		furgon = furgonRepository.save(furgon);
-		
-		return furgonMapper.toResponseDTO(furgon);
+    //quede acá
+       boolean patenteAlreadyExists = furgonRepository.existsByPatente(furgonRequestDTO.getPatente());
+
+	   if(patenteAlreadyExists){
+		   throw new BadRequestException("La patente ya está registrada!!!!!!.");
+	   }
+
+	   //Cargar usuario transportista desde la bd
+		User user =userRepository.findById(furgonRequestDTO.getUsuarioTransportistaId())
+				.orElseThrow(()->new ResourceNotFoundException("Usuario Transportista no encontrado!!"));
+
+
+
+	   Furgon furgon = furgonMapper.toEntity(furgonRequestDTO);
+	   furgon.setUsuarioTransportista(user);
+
+	   furgonRepository.save(furgon);
+	   return furgonMapper.toResponseDTO(furgon);
+	}
+
+	@Transactional
+	public FurgonResponseDTO updateFurgon(Long id, UpdateFurgonRequestDTO updateFurgonRequestDTO){
+       //se obtiene el furgon a modificar
+        Furgon furgonActual = furgonRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Furgon no encontrado!!") );
+
+		Furgon furgonUpdated;
+
+
+		/*boolean patenteAlreadyExists = furgonRepository.existsByPatente(updateFurgonRequestDTO.getPatente());
+		if(patenteAlreadyExists){
+			throw new BadRequestException(" Esa patente esta en el sistema!!!!!!.");
+		}*/
+
+		if(updateFurgonRequestDTO.getPatente() != null) furgonActual.setPatente(updateFurgonRequestDTO.getPatente());
+		if(updateFurgonRequestDTO.getDescripcion() != null) furgonActual.setDescripcion(updateFurgonRequestDTO.getDescripcion());
+
+		furgonUpdated= furgonRepository.save(furgonActual);
+
+		return furgonMapper.toResponseDTO(furgonUpdated);
 	}
 	
 	@Transactional
@@ -65,9 +102,22 @@ public class FurgonService {
 		
 		
 		
-		furgonRepository.findById(id)
+	Furgon furgon = furgonRepository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException("Furgon not found with id:" + id));
-		
-		furgonRepository.deleteById(id);
+
+	furgon.setEnabled(false);
+		furgonRepository.save(furgon);
+	}
+
+	@Transactional
+	public void reactivarFurgon(Long id){
+		Furgon furgon = furgonRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Furgon not found with id: " + id));
+
+		if(furgon.isEnabled()){
+			throw new BadRequestException("El furgón con id " +"  "+ id + " ya está activado.");
+		}
+		furgon.setEnabled(true);
+		furgonRepository.save(furgon);
 	}
 }

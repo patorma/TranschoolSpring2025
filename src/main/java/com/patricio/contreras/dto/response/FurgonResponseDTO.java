@@ -11,6 +11,8 @@ public class FurgonResponseDTO {
 	
 	private String descripcion;
 
+	private boolean enabled;
+
 	private Long usuarioTransportistaId;
 
 	private String usuarioNombres;

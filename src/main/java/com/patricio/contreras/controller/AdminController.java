@@ -3,10 +3,7 @@ package com.patricio.contreras.controller;
 import com.patricio.contreras.dto.response.FurgonResponseDTO;
 import com.patricio.contreras.dto.response.PagoResponseDTO;
 import com.patricio.contreras.dto.response.UserProfileResponseDTO;
-import com.patricio.contreras.dto.resquest.FurgonRequestDTO;
-import com.patricio.contreras.dto.resquest.PagoRequestDTO;
-import com.patricio.contreras.dto.resquest.SignupRequestDTO;
-import com.patricio.contreras.dto.resquest.UpdateUserRequestDTO;
+import com.patricio.contreras.dto.resquest.*;
 import com.patricio.contreras.service.FurgonService;
 import com.patricio.contreras.service.PagoService;
 import com.patricio.contreras.service.UserService;
@@ -95,11 +92,29 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/furgon/{id}")
+    public ResponseEntity<FurgonResponseDTO> updateFurgon(
+            @PathVariable Long id,
+            @Validated @RequestBody UpdateFurgonRequestDTO updateFurgonRequestDTO
+    ){
+       FurgonResponseDTO furgonResponseDTO =  furgonService.updateFurgon(id,updateFurgonRequestDTO);
+        return new ResponseEntity<>(furgonResponseDTO,HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("furgon/elimina/{id}")
     public ResponseEntity<?> deleteFurgon(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
         furgonService.deleteFurgon(id);
         response.put("mensaje", "El furgon fue eliminado con éxito!");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("furgon/reactiva/{id}")
+    public ResponseEntity<?> reactivaFurgon(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        furgonService.reactivarFurgon(id);
+        response.put("mensaje", "El furgon con id: "+ " "+id+ " "+"fue activado nuevamente");
         return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
     }
 

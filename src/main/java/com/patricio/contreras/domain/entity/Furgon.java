@@ -33,4 +33,7 @@ public class Furgon {
 	@JoinColumn(name = "usuario_transportista_id", nullable = false, unique = true)
 	private User usuarioTransportista;
 
+	@Column(name = "enabled",nullable = false)
+	private boolean enabled = true; //habilita o desactiva el furgon para soft delete
+
 }
