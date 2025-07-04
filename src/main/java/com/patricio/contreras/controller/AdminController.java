@@ -1,9 +1,11 @@
 package com.patricio.contreras.controller;
 
+import com.patricio.contreras.dto.response.EstudianteResponseDTO;
 import com.patricio.contreras.dto.response.FurgonResponseDTO;
 import com.patricio.contreras.dto.response.PagoResponseDTO;
 import com.patricio.contreras.dto.response.UserProfileResponseDTO;
 import com.patricio.contreras.dto.resquest.*;
+import com.patricio.contreras.service.EstudianteService;
 import com.patricio.contreras.service.FurgonService;
 import com.patricio.contreras.service.PagoService;
 import com.patricio.contreras.service.UserService;
@@ -31,6 +33,7 @@ public class AdminController {
     private final UserService userService;
     private final PagoService pagoService;
     private final FurgonService furgonService;
+    private final EstudianteService estudianteService;
 
     // para registrar un usuario transportista por parte del admin
     @PreAuthorize("hasRole('ADMIN')")
@@ -46,6 +49,19 @@ public class AdminController {
 
         List<UserProfileResponseDTO> usuarios = userService.getUsuariosSinAdmin();
         return ResponseEntity.ok(usuarios);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/usuarios/transportistas")
+    public ResponseEntity<List<UserProfileResponseDTO>> listarUsuaiosTransportistas(){
+        List<UserProfileResponseDTO> usuariosTransportistas = userService.getUsuariosTransportista();
+        return ResponseEntity.ok(usuariosTransportistas);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/usuarios/apoderados")
+    public ResponseEntity<List<UserProfileResponseDTO>> listarUsuariosApoderados(){
+        List<UserProfileResponseDTO> usuariosApoderados = userService.getUsuariosApoderados();
+        return ResponseEntity.ok(usuariosApoderados);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -116,6 +132,13 @@ public class AdminController {
         furgonService.reactivarFurgon(id);
         response.put("mensaje", "El furgon con id: "+ " "+id+ " "+"fue activado nuevamente");
         return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/estudiantes")
+    public ResponseEntity<List<EstudianteResponseDTO>> getAllEstudiantes(){
+        List<EstudianteResponseDTO> estudiantes = estudianteService.getAllEstudiantes();
+        return ResponseEntity.ok(estudiantes);
     }
 
 }

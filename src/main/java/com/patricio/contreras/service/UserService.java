@@ -67,7 +67,7 @@ public class UserService {
 	  }
 	  
 	//registro usuario
-	  @Transactional
+	/*  @Transactional
 	  public UserProfileResponseDTO signup(SignupRequestDTO signupFormDTO) {
 	    boolean emailAlreadyExists = userRepository.existsByEmail(signupFormDTO.getEmail());
 
@@ -82,7 +82,7 @@ public class UserService {
 	    userRepository.save(user);
 
 	    return userMapper.toUserProfileResponseDTO(user);
-	  }
+	  }*/
 	@Transactional
 	public UserProfileResponseDTO crearUsuario(SignupRequestDTO signupFormDTO){
 		boolean emailAlreadyExists = userRepository.existsByEmail(signupFormDTO.getEmail());
@@ -146,6 +146,28 @@ public class UserService {
 
 		List<User> usuarios = userRepository.findByRoleNot(Role.ADMIN);
 		return userMapper.toUserProfileResponseDTOList(usuarios);
+	}
+
+	@Transactional(readOnly = true)
+	public List<UserProfileResponseDTO> getUsuariosTransportista(){
+		  List<User> usuarios = userRepository.findByRole(Role.TRANSPORTISTA);
+		  return userMapper.toUserProfileResponseDTOList(usuarios);
+	}
+
+	@Transactional(readOnly = true)
+	public List<UserProfileResponseDTO> getUsuariosApoderados(){
+		  List<User> usuarios = userRepository.findByRole(Role.APODERADO);
+		  return userMapper.toUserProfileResponseDTOList(usuarios);
+	}
+
+	@Transactional(readOnly = true)
+	public UserProfileResponseDTO me(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+
+		User user = userRepository.findOneByEmail(email)
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+		return userMapper.toUserProfileResponseDTO(user);
 	}
 
 }

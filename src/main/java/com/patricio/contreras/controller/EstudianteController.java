@@ -20,11 +20,11 @@ public class EstudianteController {
 
 	private final EstudianteService estudianteService;
 	
-	@GetMapping
+	/*@GetMapping
 	public ResponseEntity<List<EstudianteResponseDTO>> getAllEstudiantes(){
 		List<EstudianteResponseDTO> estudiantes = estudianteService.getAllEstudiantes();
 		return ResponseEntity.ok(estudiantes);
-	}
+	}*/
 
 	@PostMapping("/estudiante")
 	public ResponseEntity<EstudianteResponseDTO> createEstudiante(
