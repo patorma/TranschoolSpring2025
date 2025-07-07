@@ -2,14 +2,8 @@ package com.patricio.contreras.domain.entity;
 
 import com.patricio.contreras.domain.enums.Role;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,14 +27,19 @@ public class User {
 	private String comuna;
 	
 	@Column(name = "telefono",nullable = false)
-	private int telefono;
+	private String telefono;
 	
-	@Column(name = "email",nullable = false)
+	@Column(name = "email",nullable = false,unique = true)
 	private String email;
 	
 	@Column(name = "password",nullable = false)
 	private String password;
 	
+	@Column(name = "role",nullable=false)
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@OneToOne(mappedBy = "usuarioTransportista",fetch = FetchType.LAZY)
+	private Furgon furgon;
 }

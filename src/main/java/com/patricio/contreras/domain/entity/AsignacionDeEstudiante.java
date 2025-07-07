@@ -11,11 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,35 +22,25 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "estudiantes")
-public class Estudiante {
+@Table(name ="asignaciones_de_estudiantes")
+public class AsignacionDeEstudiante {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nombres" , nullable = false)
-	private String nombres;
-	
-	@Column(name = "apellidos",nullable = false)
-	private String apellidos;
-	
-	@Column(name = "fecha_nacimiento",nullable = false)
+	@Column(name = "fecha_registro")
 	@Temporal(TemporalType.DATE)
-	private Date fechaNacimiento;
-	
-	@Column(name = "colegio",nullable = false)
-	private String colegio;
-
-	@Column(name = "email",nullable = false,unique = true)
-	private String email;
+	private Date fechaRegistro;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id",nullable = false)
+	@JoinColumn(name = "furgon_id",nullable = false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
-	private User usuario;
+	private Furgon furgon;
 	
-	@OneToOne(mappedBy = "estudiante")
-	private Recorrido recorrido;
+	@ManyToOne
+	@JoinColumn(name = "estudiante_id",nullable = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
+	private Estudiante estudiante;
 
 }
