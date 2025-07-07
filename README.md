@@ -66,6 +66,16 @@ cd transchool2025
 - Una vez que clonaste el proyecto ve a la rama fix/admin que es la última del proyecto , ya que esa rama es la que tiene los últimos cambios y se va actualizando . Lo anterior podria cambiar con otra rama según se vaya avanzando.
 
 
+🚀 Pendiente por implementar
+Integración con Docker
+
+Pruebas unitarias con JUnit y Mockito
+
+CI/CD con Jenkins o GitHub Actions
+
+Documentación Swagger
+
+
 
 
 
