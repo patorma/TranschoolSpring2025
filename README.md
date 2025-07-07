@@ -63,7 +63,7 @@ cd transchool2025
 
 2. Cambiar a última rama del proyecto:
 
-- Una vez que clonaste el proyecto ve a la rama fix/admin que es la última del proyecto , ya que esa rama es la que tiene los últimos cambios y se va actualizando . Lo anterior podria cambiar con otra rama según se vaya avanzando.
+- Una vez que clonaste el proyecto revisa el archivo Transchool.postman_collection.json e importalo en postman para tener las rutas del sistema . De lo anterior no olvides ocupar postgresql y crear la base de datos: transchool_db.
 
 
 🚀 Pendiente por implementar

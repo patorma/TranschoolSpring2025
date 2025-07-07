@@ -1,0 +1,966 @@
+{
+	"info": {
+		"_postman_id": "ce48af4b-9d1e-4f7f-9f29-06828eb4d001",
+		"name": "Transchool",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2777611",
+		"_collection_link": "https://www.postman.com/casos-transcholl/workspace/pato/collection/2777611-ce48af4b-9d1e-4f7f-9f29-06828eb4d001?action=share&source=collection_link&creator=2777611"
+	},
+	"item": [
+		{
+			"name": "Estudiantes",
+			"item": [
+				{
+					"name": "Obtener Estudiantes By Admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/estudiantes",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ingresar Estudiante",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/estudiantes/estudiante",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"estudiantes",
+								"estudiante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ApoderadoByEstudiantes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/estudiantes/apoderado/estudiantes",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"estudiantes",
+								"apoderado",
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Furgones",
+			"item": [
+				{
+					"name": "All Furgones",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/admin/furgones",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"admin",
+								"furgones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My furgon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/furgones/my-furgon",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"furgones",
+								"my-furgon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create furgon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patente\": \"SD56\",\r\n    \"descripcion\":\"Esta al di con la revision tecnica\",\r\n    \"usuarioTransportistaId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_transchool}}/admin/furgon",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"admin",
+								"furgon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Furgon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patente\": \"SD56\",\r\n    \"descripcion\":\"Esta al di con la revision tecnica\",\r\n    \"usuarioTransportistaId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_transchool}}/admin/furgon",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"admin",
+								"furgon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimar Furgon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/admin/furgon/elimina/7",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"admin",
+								"furgon",
+								"elimina",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reactiva Furgon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/admin/furgon/reactiva/7",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"admin",
+								"furgon",
+								"reactiva",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagos",
+			"item": [
+				{
+					"name": "Get All Pagos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/pagos/page",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"pagos",
+								"page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ingresar Pago",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"monto\": 25000,\r\n    \"fechaVencimiento\": \"02-06-2025\",\r\n    \"fechaPago\":\"30-06-2025\",\r\n    \"estado\": \"PAGADO\",\r\n    \"usuarioId\": 1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_transchool}}/admin/pago",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"admin",
+								"pago"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get State",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/pagos/page/state?state_pago=PAGADO",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"pagos",
+								"page",
+								"state"
+							],
+							"query": [
+								{
+									"key": "state_pago",
+									"value": "PAGADO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pago ById user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/pagos/page/id-user?id=1",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"pagos",
+								"page",
+								"id-user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pago By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/pagos/1",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"pagos",
+								"1"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recorridos",
+			"item": [
+				{
+					"name": "Get All recorridos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/recorridos/page",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"recorridos",
+								"page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  recorrido By id estudiante",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/recorridos/page/id-estudiante?id=2",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"recorridos",
+								"page",
+								"id-estudiante"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  recorrido By id  furgon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/recorridos/page/id-furgon?id=1",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"recorridos",
+								"page",
+								"id-furgon"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recorrido By id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/recorridos/1",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"recorridos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asignaciones",
+			"item": [
+				{
+					"name": "GetALLAsignaciones",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url_transchool}}/asignaciones/page",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"asignaciones",
+								"page"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Add Transportista",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  { \r\n    \"nombres\": \"Daniel Pablo\",\r\n    \"apellidos\": \"Perez Soto \",\r\n    \"email\": \"daniel@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"daniel123456\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_transchool}}/admin/sign-up",
+									"host": [
+										"{{base_url_transchool}}"
+									],
+									"path": [
+										"admin",
+										"sign-up"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all Users",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  { \r\n    \"nombres\": \"Transportista Prueba\",\r\n    \"apellidos\": \"Soy un transportista\",\r\n    \"email\": \"transportista@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"transportista123456\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_transchool}}/admin/usuarios",
+									"host": [
+										"{{base_url_transchool}}"
+									],
+									"path": [
+										"admin",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar transportistas",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  { \r\n    \"nombres\": \"Transportista Prueba\",\r\n    \"apellidos\": \"Soy un transportista\",\r\n    \"email\": \"transportista@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"transportista123456\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_transchool}}/admin/usuarios/transportistas",
+									"host": [
+										"{{base_url_transchool}}"
+									],
+									"path": [
+										"admin",
+										"usuarios",
+										"transportistas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar apoderados",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  { \r\n    \"nombres\": \"Transportista Prueba\",\r\n    \"apellidos\": \"Soy un transportista\",\r\n    \"email\": \"transportista@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"transportista123456\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_transchool}}/admin/usuarios/apoderados",
+									"host": [
+										"{{base_url_transchool}}"
+									],
+									"path": [
+										"admin",
+										"usuarios",
+										"apoderados"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update  user By Admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  { \r\n    \"nombres\": \"Transportista Prueba\",\r\n    \"apellidos\": \"Soy un transportista\",\r\n    \"email\": \"transportista@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"transportista123456\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_transchool}}/admin/user/1",
+									"host": [
+										"{{base_url_transchool}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Information user",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  { \r\n    \"nombres\": \"Transportista Prueba\",\r\n    \"apellidos\": \"Soy un transportista\",\r\n    \"email\": \"transportista@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"transportista123456\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_transchool}}/admin/findUser/2",
+									"host": [
+										"{{base_url_transchool}}"
+									],
+									"path": [
+										"admin",
+										"findUser",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\": \"Leslie Gabriela\",\r\n    \"apellidos\": \"Espinosa Gallardo\",\r\n    \"email\": \"leslie@gmail.com\",\r\n    \"comuna\": \"Los Angeles\",\r\n    \"telefono\": \"+56939456123\",\r\n    \"password\": \"leslie123456\"\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_transchool}}/auth/crear",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"auth",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_transchool}}/auth/me",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Autentication",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"patorma@yahoo.com\",\r\n    \"password\": \"muneco2025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_transchool}}/auth/sign-in",
+							"host": [
+								"{{base_url_transchool}}"
+							],
+							"path": [
+								"auth",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
