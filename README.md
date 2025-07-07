@@ -57,11 +57,17 @@ Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a tra
 ## 🚀 Ejecución local
 
 1. Clonar repositorio:
-
-```bash
 git clone https://github.com/patorma/TranschoolSpring2025.git
 cd transchool2025
+
 
 2. Cambiar a última rama del proyecto:
 
 - Una vez que clonaste el proyecto ve a la rama fix/admin que es la última del proyecto , ya que esa rama es la que tiene los últimos cambios y se va actualizando . Lo anterior podria cambiar con otra rama según se vaya avanzando.
+
+
+
+
+
+
+
