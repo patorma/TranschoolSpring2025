@@ -142,6 +142,28 @@ public class UserService {
 	  }
 
 	  @Transactional(readOnly = true)
+	  public UserProfileResponseDTO findByIdUser(Long id){
+		  // Obtener el email del usuario autenticado (admin)
+		  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		  String currentEmail = authentication.getName();
+
+		  // Buscar el usuario autenticado
+		  User currentUser = userRepository.findOneByEmail(currentEmail)
+				  .orElseThrow(() -> new ResourceNotFoundException("Usuario autenticado no encontrado"));
+
+		  // Buscar el usuario que se quiere consultar
+		  User user = userRepository.findById(id)
+				  .orElseThrow(() -> new ResourceNotFoundException("El usuario con id: " + id + " no existe"));
+
+		  // Si el usuario a consultar también es admin Y no es el mismo admin autenticado
+		  if (user.getRole() == Role.ADMIN && !user.getId().equals(currentUser.getId())) {
+			  throw new BadRequestException("No puedes acceder a la información de otro administrador.");
+		  }
+
+		  return userMapper.toUserProfileResponseDTO(user);
+	  }
+
+	  @Transactional(readOnly = true)
 	  public List<UserProfileResponseDTO> getUsuariosSinAdmin() {
 
 		List<User> usuarios = userRepository.findByRoleNot(Role.ADMIN);

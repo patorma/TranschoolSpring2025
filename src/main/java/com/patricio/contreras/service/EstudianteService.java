@@ -42,6 +42,18 @@ public class EstudianteService {
 		
 		return estudianteMapper.toResponseDTOList(estudiantes);
 	}
+	//ver los estudiantes de un apoderadoS
+	@Transactional(readOnly = true)
+	public List<EstudianteResponseDTO> apoderadoEstudiantes(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+
+		User user = userRepository.findOneByEmail(email)
+				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+		List<Estudiante> estudiantes = estudianteRepository.findByUsuarioId(user.getId());
+
+		return estudianteMapper.toResponseDTOList(estudiantes);
+	}
 	@Transactional
 	public EstudianteResponseDTO createEstudiante(EstudianteRequestDTO estudianteRequestDTO){
 
@@ -88,4 +100,6 @@ public class EstudianteService {
 				.orElseThrow(()-> new ResourceNotFoundException("Estudiante not found with id:" + id));
 		estudianteRepository.deleteById(id);
 	}
+
+
 }

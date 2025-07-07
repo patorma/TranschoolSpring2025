@@ -89,6 +89,12 @@ public class AdminController {
         UserProfileResponseDTO userProfileResponseDTO = userService.updateUsuario(id,signupDTO);
         return new ResponseEntity<>(userProfileResponseDTO ,HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/findUser/{id}")
+    public ResponseEntity<UserProfileResponseDTO> findByUser(@PathVariable Long id){
+        UserProfileResponseDTO userProfileResponseDTO = userService.findByIdUser(id);
+        return new ResponseEntity<>(userProfileResponseDTO,HttpStatus.OK);
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/furgones")
