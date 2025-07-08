@@ -1,5 +1,6 @@
 package com.patricio.contreras.controller;
 
+import com.patricio.contreras.domain.enums.Estado;
 import com.patricio.contreras.dto.response.EstudianteResponseDTO;
 import com.patricio.contreras.dto.response.FurgonResponseDTO;
 import com.patricio.contreras.dto.response.PagoResponseDTO;
@@ -145,6 +146,15 @@ public class AdminController {
     public ResponseEntity<List<EstudianteResponseDTO>> getAllEstudiantes(){
         List<EstudianteResponseDTO> estudiantes = estudianteService.getAllEstudiantes();
         return ResponseEntity.ok(estudiantes);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("pagos/page/state")
+    public ResponseEntity<Page<PagoResponseDTO>> findByyState(
+            @RequestParam Estado state_pago, @PageableDefault(sort = "estado",size = 5) Pageable pageable){
+
+        Page<PagoResponseDTO> pagos = pagoService.getPagoByState(state_pago, pageable);
+        return ResponseEntity.ok(pagos);
     }
 
 }

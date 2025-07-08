@@ -23,13 +23,7 @@ public class PagoController {
 
 	private final PagoService pagoService;
 
-	@GetMapping("/page/state")
-	public ResponseEntity<Page<PagoResponseDTO>> findByyState(
-			@RequestParam Estado state_pago,@PageableDefault(sort = "estado",size = 5) Pageable pageable){
-		
-		Page<PagoResponseDTO> pagos = pagoService.getPagoByState(state_pago, pageable);
-		return ResponseEntity.ok(pagos);	
-	}
+
 	
 	@GetMapping("/page/id-user")
 	public ResponseEntity<Page<PagoResponseDTO>>findByIdUser(@RequestParam Long id,@PageableDefault(size = 5) Pageable pageable){
