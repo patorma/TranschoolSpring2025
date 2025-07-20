@@ -15,18 +15,10 @@ import com.patricio.contreras.domain.enums.Estado;
 
 public interface PagoRepository extends JpaRepository<Pago, Long> {
 
-	//Optional<Pago> findByEstado(String estado);
-	
-	/*
-	 * @Query("SELECT a FROM Alarma a WHERE a.tipoAlarma.nombreAlarma = :tipoAlarmaName")
-	Page<Alarma> findByTipoAlarmaName(@Param("tipoAlarmaName") String tipoAlarmaName,Pageable pageable );
-	 * 
-	 * */
-	@Query("SELECT p FROM Pago p WHERE p.estado = :estado")
-	Page<Pago> findByEstado(@Param("estado") Estado estado,Pageable pageable);
-	
-	@Query("SELECT p FROM Pago p WHERE p.usuario.id = :userId")
-    Page<Pago> findByUserId(@Param("userId") Long userId,Pageable pageable);
+
+    @Query("SELECT p FROM Pago p  WHERE p.enabled= true")
+    Page<Pago> findAllEnabled(Pageable pageable);
+
 
 
 	

@@ -25,17 +25,17 @@ public class PagoController {
 
 
 	
-	@GetMapping("/page/id-user")
+/*	@GetMapping("/page/id-user")
 	public ResponseEntity<Page<PagoResponseDTO>>findByIdUser(@RequestParam Long id,@PageableDefault(size = 5) Pageable pageable){
 		Page<PagoResponseDTO> pagos = pagoService.getPagoByUserId(id, pageable);
 		return ResponseEntity.ok(pagos);
-	}
+	}*/
 	
-	@GetMapping("/{id}")
+	/*@GetMapping("/{id}")
 	public ResponseEntity<PagoResponseDTO> getPagoById(@PathVariable Long id){
 		PagoResponseDTO pago = pagoService.getPagoById(id);
 		return ResponseEntity.ok(pago);
-	}
+	}*/
 
 
 

@@ -6,18 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.patricio.contreras.domain.enums.Estado;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,43 +23,30 @@ public class Pago {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "monto",nullable = false)
-	private int monto;
-	
-	@Column(name = "fecha_vencimiento",nullable = false)
-	@Temporal(TemporalType.DATE)
-	private  Date fechaVencimiento;
-	
+	@Column(name = "monto_pagado",nullable = false)
+	private int montoPagado;
+
 	@Column(name = "fecha_pago",nullable = true)
 	@Temporal(TemporalType.DATE)
 	private  Date fechaPago;
-	
-	@Enumerated(EnumType.STRING)
-	private Estado estado;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id",nullable = false)
-	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
-	private User usuario;
-	
-	@Column(name = "total_pago",nullable = false)
-	private int totalPago;
 
-	public int getMontoConMulta() {
-		 if (fechaPago == null) {
-			 this.totalPago = monto;
-		        return this.totalPago ; // Si aún no se ha pagado, devolver el monto original
-		    }
-		 long diferenciaEnMs = fechaPago.getTime() - fechaVencimiento.getTime();
-		    long diasRetraso = TimeUnit.DAYS.convert(diferenciaEnMs, TimeUnit.MILLISECONDS);
+	@OneToOne
+	@JoinColumn(name = "mensualidad_id", nullable = false, unique = true)
+	private Mensualidad mensualidad;
 
-		    if (diasRetraso > 10) {
-		        double multa = monto * 0.10; // 10% de multa
-		        this.totalPago =  monto + (int) multa;
-		        return this.totalPago;
-		    }
+	@Column(name= "enabled",nullable = false)
+	private boolean enabled = true;
+	
+	@PrePersist
+	public void calcularMulta(){
+		Date fechaVencimiento = mensualidad.getFechaVencimiento();
+		long diferenciaEnMs = fechaPago.getTime() - fechaVencimiento.getTime();
+		long diasRetraso = TimeUnit.DAYS.convert(diferenciaEnMs, TimeUnit.MILLISECONDS);
 
-		    return this.totalPago;
+		if (diasRetraso > 10) {
+			double multa = mensualidad.getMonto() * 0.10; // 10%
+			this.montoPagado += (int) multa;
+		}
 	}
 	
 }

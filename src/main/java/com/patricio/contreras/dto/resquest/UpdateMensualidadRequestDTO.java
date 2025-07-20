@@ -10,18 +10,20 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class PagoRequestDTO {
+public class UpdateMensualidadRequestDTO {
 
     private Long id;
 
-    @NotNull(message = "El monto pagado es obligatorio")
-    private int montoPagado;
 
-    @NotNull(message = "no puede estar vacia la fecha de pago")
+    private int monto;
+
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private  Date fechaPago;
+    private Date fechaVencimiento;
 
-    @NotNull(message = "no puede estar vacio el id de la mensualidad")
-    private Long mensualidadId;
+
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
 
 }

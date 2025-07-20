@@ -1,15 +1,9 @@
 package com.patricio.contreras.controller;
 
 import com.patricio.contreras.domain.enums.Estado;
-import com.patricio.contreras.dto.response.EstudianteResponseDTO;
-import com.patricio.contreras.dto.response.FurgonResponseDTO;
-import com.patricio.contreras.dto.response.PagoResponseDTO;
-import com.patricio.contreras.dto.response.UserProfileResponseDTO;
+import com.patricio.contreras.dto.response.*;
 import com.patricio.contreras.dto.resquest.*;
-import com.patricio.contreras.service.EstudianteService;
-import com.patricio.contreras.service.FurgonService;
-import com.patricio.contreras.service.PagoService;
-import com.patricio.contreras.service.UserService;
+import com.patricio.contreras.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +29,7 @@ public class AdminController {
     private final PagoService pagoService;
     private final FurgonService furgonService;
     private final EstudianteService estudianteService;
+    public final MensualidadService mensualidadService;
 
     // para registrar un usuario transportista por parte del admin
     @PreAuthorize("hasRole('ADMIN')")
@@ -65,6 +60,8 @@ public class AdminController {
         return ResponseEntity.ok(usuariosApoderados);
     }
 
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pagos/page")
     public ResponseEntity<Page<PagoResponseDTO>> getAllPagos(
@@ -72,6 +69,85 @@ public class AdminController {
         Page<PagoResponseDTO> pagos = pagoService.getAllPagos(pageable);
         return ResponseEntity.ok(pagos);
     }
+
+    //   ver todas las mensualidades de los apoderados que estan activas
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/mensualidades/page")
+    public ResponseEntity<Page<MensualidadResponseDTO>> getAllMensualidades(
+            @PageableDefault(size = 5) Pageable pageable)
+    {
+        Page<MensualidadResponseDTO> mensualidades = mensualidadService.getAllMensualidades(pageable);
+        return ResponseEntity.ok(mensualidades);
+
+    }
+
+    //Buscar el estado de una mensualidad por parte del admin
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("mensualidades/page/state")
+    public ResponseEntity<Page<MensualidadResponseDTO>> findByState(
+            @RequestParam Estado state_mensualidad,  @PageableDefault(sort = "estado",size = 5) Pageable pageable
+    ){
+      Page<MensualidadResponseDTO> mensualidades = mensualidadService.getMensualidadByEstado(state_mensualidad,pageable);
+      return ResponseEntity.ok(mensualidades);
+    }
+
+
+
+    // se registra por parte del admin la mensualidad asociada al apoderado
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/mensualidad")
+    public ResponseEntity<MensualidadResponseDTO> createMensualidad(
+            @RequestBody @Validated MensualidadRequestDTO mensualidadRequestDTO
+    ){
+        MensualidadResponseDTO mensualidadResponseDTO = mensualidadService.createMensualidad(mensualidadRequestDTO);
+        return new ResponseEntity<>(mensualidadResponseDTO, HttpStatus.CREATED);
+    }
+
+// se actualiza por Id una mensualidad por parte del admin
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/mensualidad/{id}")
+    public ResponseEntity<MensualidadResponseDTO> updateMensualidad(
+            @PathVariable Long id,
+            @Validated @RequestBody UpdateMensualidadRequestDTO updateMensualidadRequestDTO
+    ){
+        MensualidadResponseDTO mensualidadResponseDTO = mensualidadService.updateMensualidad(updateMensualidadRequestDTO,id);
+        return new ResponseEntity<>(mensualidadResponseDTO,HttpStatus.CREATED);
+    }
+
+// el admin busca por id de usuario apoderado las mensualidades que esté tiene asociadas
+   @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/mensualidades/page/id-user")
+    public ResponseEntity<Page<MensualidadResponseDTO>> findByIdUserMensualidad(
+            @RequestParam Long id,@PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<MensualidadResponseDTO> mensualidades = mensualidadService.getMensualidadByUserId(id,pageable);
+        return ResponseEntity.ok(mensualidades);
+    }
+
+    // se desactiva la mensualidad es un soft delete
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/mensualidad/eliminar/{id}")
+    public ResponseEntity<?> deleteMensualidad(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        mensualidadService.deleteMensualidad(id);
+        response.put("mensaje","La mensualidad fue eliminada con éxito!");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+
+    // se reactiva la mensualidad
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/mensualidad/reactiva/{id}")
+    public ResponseEntity<?> reactivarMensualidad(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        mensualidadService.reactivarMensualidad(id);
+        response.put("mensaje", "La mensualidad con id: "+ " "+id+ " "+"fue activada nuevamente");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+
+
+
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/pago")
     public ResponseEntity<PagoResponseDTO> createPago(
@@ -80,6 +156,39 @@ public class AdminController {
         PagoResponseDTO pagoResponseDTO = pagoService.createPago(pagoRequestDTO);
         return new ResponseEntity<>(pagoResponseDTO, HttpStatus.CREATED);
     }
+
+    //se actualiza un pago
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/pago/{id}")
+    public ResponseEntity<PagoResponseDTO> updatePago(
+            @PathVariable Long id,
+            @Validated @RequestBody UpdatePagoRequestDTO updatePagoRequestDTO
+    ){
+        PagoResponseDTO pagoResponseDTO = pagoService.updatePago(updatePagoRequestDTO,id);
+        return new ResponseEntity<>(pagoResponseDTO,HttpStatus.OK);
+    }
+
+    // se desactiva el pago con un soft delete
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/pago/eliminar/{id}")
+    public ResponseEntity<?> deletePago(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        pagoService.deletePago(id);
+        response.put("mensaje","El pago fue eliminado con éxito!");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+
+    // se reactiva el pago
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/pago/reactiva/{id}")
+    public ResponseEntity<?> reactivarrPago(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        pagoService.reactivarPago(id);
+        response.put("mensaje", "El pago con id: "+ " "+id+ " "+"fue activado nuevamente");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/user/{id}")
@@ -95,6 +204,20 @@ public class AdminController {
     public ResponseEntity<UserProfileResponseDTO> findByUser(@PathVariable Long id){
         UserProfileResponseDTO userProfileResponseDTO = userService.findByIdUser(id);
         return new ResponseEntity<>(userProfileResponseDTO,HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/mensualidad/{id}")
+    public ResponseEntity<MensualidadResponseDTO> findMensualidadById(@PathVariable Long id){
+        MensualidadResponseDTO mensualidadResponseDTO = mensualidadService.getMensualidadById(id);
+        return new ResponseEntity<>(mensualidadResponseDTO,HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/pago/{id}")
+    public ResponseEntity<PagoResponseDTO> findPagoById(@PathVariable Long id){
+        PagoResponseDTO pagoResponseDTO = pagoService.getPagoById(id);
+        return new ResponseEntity<>(pagoResponseDTO, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -148,13 +271,6 @@ public class AdminController {
         return ResponseEntity.ok(estudiantes);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("pagos/page/state")
-    public ResponseEntity<Page<PagoResponseDTO>> findByyState(
-            @RequestParam Estado state_pago, @PageableDefault(sort = "estado",size = 5) Pageable pageable){
 
-        Page<PagoResponseDTO> pagos = pagoService.getPagoByState(state_pago, pageable);
-        return ResponseEntity.ok(pagos);
-    }
 
 }

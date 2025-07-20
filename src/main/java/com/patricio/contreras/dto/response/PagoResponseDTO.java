@@ -12,17 +12,14 @@ public class PagoResponseDTO {
 
 	private Long id;
 	
-	private int monto;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-	private Date fechaVencimiento;
+	private int montoPagado;
+
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date fechaPago;
-	
-	private int totalPago;
-	
-	private Estado estado;
-	
-	private String usuarioNombres;
-	private Long usuarioId;
+
+	private boolean enabled;
+
+	private Long mensualidadId;
+
 }
