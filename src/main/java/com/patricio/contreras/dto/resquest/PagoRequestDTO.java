@@ -14,8 +14,8 @@ public class PagoRequestDTO {
 
     private Long id;
 
-    @NotNull(message = "El monto pagado es obligatorio")
-    private int montoPagado;
+   /* @NotNull(message = "El monto pagado es obligatorio")
+    private int montoPagado;*/
 
     @NotNull(message = "no puede estar vacia la fecha de pago")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")

@@ -16,8 +16,8 @@ import com.patricio.contreras.domain.enums.Estado;
 public interface PagoRepository extends JpaRepository<Pago, Long> {
 
 
-    @Query("SELECT p FROM Pago p  WHERE p.enabled= true")
-    Page<Pago> findAllEnabled(Pageable pageable);
+/*    @Query("SELECT p FROM Pago p  WHERE p.enabled= true")
+    Page<Pago> findAllEnabled(Pageable pageable);*/
 
 
 

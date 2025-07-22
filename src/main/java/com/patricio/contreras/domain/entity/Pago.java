@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -23,30 +24,32 @@ public class Pago {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "monto_pagado",nullable = false)
+	@Column(name = "monto_pagado",nullable = true)
 	private int montoPagado;
 
-	@Column(name = "fecha_pago",nullable = true)
+	@Column(name = "fecha_pago",nullable = false)
 	@Temporal(TemporalType.DATE)
 	private  Date fechaPago;
 
 	@OneToOne
+	@ToString.Exclude
 	@JoinColumn(name = "mensualidad_id", nullable = false, unique = true)
 	private Mensualidad mensualidad;
 
-	@Column(name= "enabled",nullable = false)
-	private boolean enabled = true;
-	
-	@PrePersist
-	public void calcularMulta(){
+
+	public int calcularMulta(){
 		Date fechaVencimiento = mensualidad.getFechaVencimiento();
 		long diferenciaEnMs = fechaPago.getTime() - fechaVencimiento.getTime();
 		long diasRetraso = TimeUnit.DAYS.convert(diferenciaEnMs, TimeUnit.MILLISECONDS);
 
 		if (diasRetraso > 10) {
 			double multa = mensualidad.getMonto() * 0.10; // 10%
-			this.montoPagado += (int) multa;
+			this.montoPagado  = mensualidad.getMonto()+ (int) multa;
+
+			return this.montoPagado;
 		}
+		this.montoPagado = mensualidad.getMonto();
+		return this.montoPagado;
 	}
 	
 }

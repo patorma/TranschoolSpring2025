@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -40,5 +41,6 @@ public class Mensualidad {
 
 
     @OneToOne(mappedBy = "mensualidad", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Pago pago;
 }

@@ -18,7 +18,6 @@ public class PagoResponseDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date fechaPago;
 
-	private boolean enabled;
 
 	private Long mensualidadId;
 

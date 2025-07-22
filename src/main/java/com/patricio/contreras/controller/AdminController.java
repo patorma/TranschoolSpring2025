@@ -3,6 +3,7 @@ package com.patricio.contreras.controller;
 import com.patricio.contreras.domain.enums.Estado;
 import com.patricio.contreras.dto.response.*;
 import com.patricio.contreras.dto.resquest.*;
+import com.patricio.contreras.exception.ResourceNotFoundException;
 import com.patricio.contreras.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -169,23 +170,27 @@ public class AdminController {
     }
 
     // se desactiva el pago con un soft delete
+
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/pago/eliminar/{id}")
-    public ResponseEntity<?> deletePago(@PathVariable Long id){
+    public ResponseEntity<Map<String, Object>> deletePago(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();
-        pagoService.deletePago(id);
-        response.put("mensaje","El pago fue eliminado con éxito!");
-        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
-    }
-
-    // se reactiva el pago
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/pago/reactiva/{id}")
-    public ResponseEntity<?> reactivarrPago(@PathVariable Long id){
-        Map<String, Object> response = new HashMap<>();
-        pagoService.reactivarPago(id);
-        response.put("mensaje", "El pago con id: "+ " "+id+ " "+"fue activado nuevamente");
-        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+        try {
+            // Intenta eliminar el pago
+            pagoService.deletePago(id);
+            response.put("mensaje","El pago fue eliminado con éxito!");
+            return new ResponseEntity<>(response, HttpStatus.OK); // Retorna 200 OK si todo sale bien
+        } catch (ResourceNotFoundException e) {
+            // Si el pago no se encuentra, captura la excepción y retorna un 404 NOT FOUND
+            response.put("mensaje", e.getMessage()); // El mensaje de la excepción: "Pago no encontrado con ID: ..."
+            response.put("error", "Not Found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); // Retorna 404
+        } catch (Exception e) {
+            // Captura cualquier otra excepción inesperada
+            response.put("mensaje", "Ocurrió un error inesperado al eliminar el pago.");
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); // Retorna 500
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package com.patricio.contreras.service;
 
 import com.patricio.contreras.domain.entity.Mensualidad;
+import com.patricio.contreras.domain.entity.Pago;
 import com.patricio.contreras.domain.entity.User;
 import com.patricio.contreras.domain.enums.Estado;
 import com.patricio.contreras.dto.response.MensualidadResponseDTO;
@@ -10,6 +11,7 @@ import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.exception.ResourceNotFoundException;
 import com.patricio.contreras.mapper.MensualidadMapper;
 import com.patricio.contreras.repository.MensualidadRepository;
+import com.patricio.contreras.repository.PagoRepository;
 import com.patricio.contreras.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

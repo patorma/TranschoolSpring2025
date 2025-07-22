@@ -38,7 +38,7 @@ public class PagoService {
 
 	@Transactional(readOnly = true)
 	public Page<PagoResponseDTO> getAllPagos(Pageable pageable){
-		Page<Pago> pagos = pagoRepository.findAllEnabled(pageable);
+		Page<Pago> pagos = pagoRepository.findAll(pageable);
 		
 		return pagos.map(pagoMapper::toResponseDTO);
 		
@@ -60,6 +60,10 @@ public class PagoService {
 		pago.setMensualidad(mensualidad);
         pago.calcularMulta();
 		pagoRepository.save(pago);
+		mensualidad.setEstado(Estado.PAGADO);
+		mensualidadRepository.save(mensualidad);
+		/*	mensualidad.setEstado(Estado.MOROSO);
+		mensualidadRepository.save(mensualidad);*/
 
 		return pagoMapper.toResponseDTO(pago);
 	}
@@ -83,29 +87,20 @@ public class PagoService {
 	@Transactional
 	public void deletePago(Long id){
 
+		// Busca el pago por ID. Si no lo encuentra, lanza ResourceNotFoundException.
 		Pago pago = pagoRepository.findById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Mensualidad not found with id: " + id));
-		pago.setEnabled(false);
-		pagoRepository.save(pago);
-	}
+				.orElseThrow(()-> new ResourceNotFoundException("Pago no encontrado con ID: " + id));
 
-	@Transactional
-	public void  reactivarPago(Long id){
-
-		Pago pago = pagoRepository.findById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Mensualidad not found with id: " + id));
-
-		if(pago.isEnabled()){
-			throw new BadRequestException("El pago con id " +"  "+ id + " ya está activado.");
+// Rompe la relación
+		Mensualidad mensualidad = pago.getMensualidad();
+		if (mensualidad != null) {
+			mensualidad.setPago(null);
 		}
 
-		pago.setEnabled(true);
-		pagoRepository.save(pago);
+		pago.setMensualidad(null); // También rompe en el otro lado, por claridad
+
+		pagoRepository.delete(pago);
+		mensualidad.setEstado(Estado.MOROSO);
+		mensualidadRepository.save(mensualidad);
 	}
-
-
-
-
-
-
 }
