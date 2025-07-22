@@ -1,5 +1,8 @@
 package com.patricio.contreras.service;
 
+import com.patricio.contreras.domain.entity.Estudiante;
+import com.patricio.contreras.dto.resquest.RecorridoRequestDTO;
+import com.patricio.contreras.repository.EstudianteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class RecorridoService {
 
 	private final RecorridoRepository recorridoRepository;
+
+	private final EstudianteRepository estudianteRepository;
 	
 	private final RecorridoMapper recorridoMapper;
 	
@@ -38,6 +43,18 @@ public class RecorridoService {
 	   Page<Recorrido>  recorridosByIdEstudiante = recorridoRepository.findByEstudianteId(id, pageable);
 	   return  recorridosByIdEstudiante .map(recorridoMapper::toResponseDTO);
 	   
+   }
+
+   @Transactional
+   public RecorridoResponseDTO createRecorrido(RecorridoRequestDTO recorridoRequestDTO){
+
+	   Estudiante estudiante = estudianteRepository.findById(recorridoRequestDTO.getEstudianteId())
+			   .orElseThrow(()-> new ResourceNotFoundException("Estudiante no encontrado"));
+
+	   Recorrido recorrido = recorridoMapper.toEntity(recorridoRequestDTO);
+	   recorrido.setEstudiante(estudiante);
+	   recorridoRepository.save(recorrido);
+	   return recorridoMapper.toResponseDTO(recorrido);
    }
  
    

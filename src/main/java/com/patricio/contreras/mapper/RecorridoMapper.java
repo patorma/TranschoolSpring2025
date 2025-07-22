@@ -2,6 +2,7 @@ package com.patricio.contreras.mapper;
 
 import java.util.List;
 
+import com.patricio.contreras.dto.resquest.RecorridoRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,9 @@ public class RecorridoMapper {
 				.map(this::toResponseDTO)
 				.toList();
 		
+	}
+
+	public Recorrido toEntity(RecorridoRequestDTO recorridoRequestDTO){
+		return modelMapper.map(recorridoRequestDTO,Recorrido.class);
 	}
 }

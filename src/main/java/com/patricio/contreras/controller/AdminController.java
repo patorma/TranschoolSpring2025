@@ -30,8 +30,8 @@ public class AdminController {
     private final PagoService pagoService;
     private final FurgonService furgonService;
     private final EstudianteService estudianteService;
-    public final MensualidadService mensualidadService;
-
+    private final MensualidadService mensualidadService;
+    private final RecorridoService recorridoService;
     // para registrar un usuario transportista por parte del admin
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/sign-up")
@@ -93,7 +93,15 @@ public class AdminController {
     }
 
 
-
+//crear recorrido
+   @PreAuthorize("hasRole('ADMIN')")
+   @PostMapping("/recorrido")
+    public ResponseEntity<RecorridoResponseDTO> createRecorrido(
+            @RequestBody @Validated RecorridoRequestDTO recorridoRequestDTO
+    ){
+        RecorridoResponseDTO recorridoResponseDTO =recorridoService.createRecorrido(recorridoRequestDTO);
+       return new ResponseEntity<>(recorridoResponseDTO,HttpStatus.CREATED);
+    }
     // se registra por parte del admin la mensualidad asociada al apoderado
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/mensualidad")
