@@ -19,6 +19,6 @@ public class PagoResponseDTO {
 	private Date fechaPago;
 
 
-	private Long mensualidadId;
+	private MensualidadResponseDTO mensualidad;
 
 }

@@ -50,7 +50,7 @@ public class EstudianteService {
 
 		User user = userRepository.findOneByEmail(email)
 				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
-		List<Estudiante> estudiantes = estudianteRepository.findByUsuarioId(user.getId());
+		List<Estudiante> estudiantes = estudianteRepository.findByUsuarioApoderadoId(user.getId());
 
 		return estudianteMapper.toResponseDTOList(estudiantes);
 	}
@@ -79,7 +79,7 @@ public class EstudianteService {
 		estudiante.setApellidos(estudiante.getApellidos());
 		estudiante.setFechaNacimiento(estudiante.getFechaNacimiento());
 		estudiante.setColegio(estudiante.getColegio());
-		estudiante.setUsuario(usuario);
+		estudiante.setUsuarioApoderado(usuario);
 		//estudiante.setRecorrido(recorrido);
 
 		boolean idAlreadyExists = estudianteRepository.existsByEmail(estudianteRequestDTO.getEmail());

@@ -29,18 +29,14 @@ public class RecorridoController {
 		return ResponseEntity.ok(recorridos);
 	} 
 	
-	@GetMapping("/page/id-estudiante")
+	/*@GetMapping("/page/id-estudiante")
 	public ResponseEntity<Page<RecorridoResponseDTO>> findByIdEstudiante(@RequestParam Long id,@PageableDefault(size = 5) Pageable pageable){
 		
 		Page<RecorridoResponseDTO> recorridos = recorridoService.getRecorridoByEstudianteId(id, pageable);
 		return ResponseEntity.ok(recorridos);
-	}
+	}*/
 	
 
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<RecorridoResponseDTO> getRecorridoById(@PathVariable Long id){
-		RecorridoResponseDTO recorrido = recorridoService.getRecorridoById(id);
-		return ResponseEntity.ok(recorrido);
-	}
+
 }

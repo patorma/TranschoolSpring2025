@@ -50,9 +50,9 @@ public class Estudiante {
 	@ManyToOne
 	@JoinColumn(name = "user_id",nullable = false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
-	private User usuario;
+	private User usuarioApoderado;
 	
-	@OneToOne(mappedBy = "estudiante")
-	private Recorrido recorrido;
+	/*@OneToOne(mappedBy = "estudiante")
+	private Recorrido recorrido;*/
 
 }

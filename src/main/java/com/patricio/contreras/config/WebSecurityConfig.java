@@ -47,6 +47,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/admin/**").hasRole("ADMIN")    // Requiere rol ADMIN.+
 						.requestMatchers("/furgones/**").hasRole("TRANSPORTISTA")
 						.requestMatchers("/estudiantes/**").hasRole("APODERADO")
+						.requestMatchers("/mensualidades/**").hasRole("APODERADO")
 						// Requiere autenticación para cualquier otra solicitud.
 						.anyRequest()
 						.authenticated()

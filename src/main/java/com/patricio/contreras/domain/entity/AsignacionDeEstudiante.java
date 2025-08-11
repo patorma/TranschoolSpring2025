@@ -4,16 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +20,7 @@ public class AsignacionDeEstudiante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "fecha_registro")
+	@Column(name = "fecha_registro",nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date fechaRegistro;
 	
@@ -42,5 +33,10 @@ public class AsignacionDeEstudiante {
 	@JoinColumn(name = "estudiante_id",nullable = false)
 	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
 	private Estudiante estudiante;
+
+	@ManyToOne
+	@JoinColumn(name = "recorrido_id",nullable = false)
+	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
+	private Recorrido recorrido;
 
 }

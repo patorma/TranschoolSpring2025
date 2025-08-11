@@ -2,6 +2,9 @@ package com.patricio.contreras.service;
 
 import java.util.List;
 
+import com.patricio.contreras.domain.entity.Recorrido;
+import com.patricio.contreras.exception.BadRequestException;
+import com.patricio.contreras.repository.RecorridoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,8 @@ public class AsignacionDeEstudianteService {
 	private final EstudianteRepository estudianteRepository;
 	
 	private final FurgonRepository furgonRepository;
+
+	private final RecorridoRepository recorridoRepository;
 	
 	private final AsignacionDeEstudianteMapper asignacionDeEstudianteMapper;
 	
@@ -40,19 +45,32 @@ public class AsignacionDeEstudianteService {
 	}
 	@Transactional
 	public AsignacionDeEstudianteResponseDTO createAsignaciones(AsignacionDeEstudianteRequestDTO asignacionDeEstudianteRequestDTO ) {
-		
+        boolean idEstudianteExists = asignacionDeEstudianteRepository.existsByEstudiante_Id(asignacionDeEstudianteRequestDTO.getEstudianteId());
+
+		//boolean idFurgonExists = asignacionDeEstudianteRepository.existsByFurgon_Id(asignacionDeEstudianteRequestDTO.getFurgonId());
+
+		// esto es para evitar ingresar el mismo estudiante con los mismos datos
+		// neuvamente
+		if(idEstudianteExists){
+			throw new BadRequestException("Ese estudiante esta registrado!!!!!!.");
+		}
+
 		Estudiante estudiante = estudianteRepository.findById(asignacionDeEstudianteRequestDTO.getEstudianteId())
 				                         .orElseThrow(()-> new ResourceNotFoundException("student not found by id"));
 		
 		Furgon furgon = furgonRepository.findById(asignacionDeEstudianteRequestDTO.getFurgonId())
 										.orElseThrow(()-> new ResourceNotFoundException("furgon not found by id"));
-		
+
+		Recorrido recorrido = recorridoRepository.findById(asignacionDeEstudianteRequestDTO.getRecorridoId())
+				.orElseThrow(()-> new ResourceNotFoundException("recorrido not found by id"));
+
 		AsignacionDeEstudiante asignacion =
 				asignacionDeEstudianteMapper.toEntity(asignacionDeEstudianteRequestDTO);
 		
 		asignacion.setFechaRegistro(asignacion.getFechaRegistro());
 		asignacion.setEstudiante(estudiante );
 		asignacion.setFurgon(furgon);
+		asignacion.setRecorrido(recorrido);
 		
 		asignacion = asignacionDeEstudianteRepository.save(asignacion);
 		
@@ -69,14 +87,15 @@ public class AsignacionDeEstudianteService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<AsignacionDeEstudianteResponseDTO> getAsignacionByEstudianteId(Long id,Pageable pageable){
+	public AsignacionDeEstudianteResponseDTO getAsignacionByEstudianteId(Long id){
 		
-		Page<AsignacionDeEstudiante> asignacionEstudianteByIdEstudiante =  
-				asignacionDeEstudianteRepository.findByEstudianteId(id,pageable);
-		return asignacionEstudianteByIdEstudiante.map(asignacionDeEstudianteMapper::toResponseDTO);
+		AsignacionDeEstudiante asignacionEstudianteByIdEstudiante =
+				asignacionDeEstudianteRepository.findByEstudianteId(id).
+						orElseThrow(()->new ResourceNotFoundException("No ser em"));
+		return asignacionDeEstudianteMapper.toResponseDTO(asignacionEstudianteByIdEstudiante);
 		
 	}
-	
+
 	@Transactional(readOnly = true)
 	public  Page<AsignacionDeEstudianteResponseDTO> getAsignacionByFurgonId(Long id,Pageable pageable){
 		Page<AsignacionDeEstudiante> asignacionByIdFurgon = 
@@ -94,8 +113,11 @@ public class AsignacionDeEstudianteService {
 		//quede acá mver controller
 		
 	}
-	
-	
-	
+
+
+	@Transactional
+	public Integer contarAsignacionesPorFurgon(Long furgonId) {
+		return asignacionDeEstudianteRepository.contarEstudiantesAsignados(furgonId);
+	}
 
 }

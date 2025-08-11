@@ -32,6 +32,7 @@ public class AdminController {
     private final EstudianteService estudianteService;
     private final MensualidadService mensualidadService;
     private final RecorridoService recorridoService;
+    private final AsignacionDeEstudianteService asignacionDeEstudianteService;
     // para registrar un usuario transportista por parte del admin
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/sign-up")
@@ -102,6 +103,27 @@ public class AdminController {
         RecorridoResponseDTO recorridoResponseDTO =recorridoService.createRecorrido(recorridoRequestDTO);
        return new ResponseEntity<>(recorridoResponseDTO,HttpStatus.CREATED);
     }
+
+    //actualizar un recorrido
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/actualizar/recorrido/{id}")
+    public ResponseEntity<RecorridoResponseDTO> updateRecorrido(
+            @PathVariable Long id,
+            @Validated @RequestBody UpdateRecorridoRequestDTO updateRecorridoRequestDTO
+    ){
+        RecorridoResponseDTO  recorridoResponseDTO = recorridoService.updateReciorrido(id,updateRecorridoRequestDTO);
+        return new ResponseEntity<>(recorridoResponseDTO,HttpStatus.OK);
+    }
+
+    //buscar un recorrido por id
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/recorrido/{id}")
+    public ResponseEntity<RecorridoResponseDTO> getRecorridoById(@PathVariable Long id){
+        RecorridoResponseDTO recorrido = recorridoService.getRecorridoById(id);
+        return ResponseEntity.ok(recorrido);
+    }
+
     // se registra por parte del admin la mensualidad asociada al apoderado
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/mensualidad")
@@ -284,6 +306,67 @@ public class AdminController {
         return ResponseEntity.ok(estudiantes);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/asignacion")
+    public ResponseEntity<AsignacionDeEstudianteResponseDTO> createAsignacion(
+            @RequestBody @Validated AsignacionDeEstudianteRequestDTO
+                    asignacionDeEstudianteRequestDTO ){
+        AsignacionDeEstudianteResponseDTO asignacionDeEstudianteResponseDTO=
+                asignacionDeEstudianteService.createAsignaciones(asignacionDeEstudianteRequestDTO);
+        return new ResponseEntity<>(asignacionDeEstudianteResponseDTO,HttpStatus.CREATED);
+    }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/asignaciones/page")
+    public ResponseEntity<Page<AsignacionDeEstudianteResponseDTO>>getAllAsignaciones(
+            @PageableDefault(size = 5)Pageable pageable){
+        Page<AsignacionDeEstudianteResponseDTO>asignaciones =
+                asignacionDeEstudianteService.getAllAsignaciones(pageable);
+        return ResponseEntity.ok(asignaciones);
+    }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/asignacion/eliminar/{id}")
+    public ResponseEntity<?> deleteAsignacion(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        asignacionDeEstudianteService.deleteAsignacion(id);
+        response.put("mensaje", "La asignación fue eliminada con éxito!");
+        return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
+    }
+
+    //es para ver el furgon al cual esta asignado
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/asigEstudiante/idEstudiante")
+    public ResponseEntity<AsignacionDeEstudianteResponseDTO>findByIdEstudiante(
+            @RequestParam Long id){
+
+        AsignacionDeEstudianteResponseDTO asignaciones =
+                asignacionDeEstudianteService.getAsignacionByEstudianteId(id);
+        return ResponseEntity.ok(asignaciones);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/asigFurgon/page/idFurgon")
+    public ResponseEntity<Page<AsignacionDeEstudianteResponseDTO>>findByFurgon(
+            @RequestParam Long id,@PageableDefault(size = 5) Pageable pageable	){
+        Page<AsignacionDeEstudianteResponseDTO> asignaciones =
+                asignacionDeEstudianteService.getAsignacionByFurgonId(id, pageable);
+        return ResponseEntity.ok(asignaciones);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/asignacion/{id}")
+    public ResponseEntity<AsignacionDeEstudianteResponseDTO>getAsignacionById(
+            @PathVariable Long id) {
+        AsignacionDeEstudianteResponseDTO asignacion =
+                asignacionDeEstudianteService.getAsignacionById(id);
+        return ResponseEntity.ok(asignacion);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/furgon/asignaciones/count")
+    public ResponseEntity<Integer> contarEstudiantesAsignados(@RequestParam Long furgonId){
+        Integer total = asignacionDeEstudianteService.contarAsignacionesPorFurgon(furgonId);
+        return ResponseEntity.ok(total);
+    }
 }

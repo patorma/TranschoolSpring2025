@@ -13,6 +13,6 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long>{
 
    boolean existsByEmail(String email);
    //user_id
-   List<Estudiante> findByUsuarioId(Long usuarioId);
+   List<Estudiante> findByUsuarioApoderadoId(Long usuarioId);
 
 }

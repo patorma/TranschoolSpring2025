@@ -2,6 +2,8 @@ package com.patricio.contreras.service;
 
 import com.patricio.contreras.domain.entity.Estudiante;
 import com.patricio.contreras.dto.resquest.RecorridoRequestDTO;
+import com.patricio.contreras.dto.resquest.UpdateRecorridoRequestDTO;
+import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.repository.EstudianteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,24 +40,49 @@ public class RecorridoService {
 	   return recorridoMapper.toResponseDTO(recorrido);
    }
    
-   @Transactional(readOnly = true)
+  /* @Transactional(readOnly = true)
    public Page<RecorridoResponseDTO> getRecorridoByEstudianteId(Long id,Pageable pageable){
 	   Page<Recorrido>  recorridosByIdEstudiante = recorridoRepository.findByEstudianteId(id, pageable);
 	   return  recorridosByIdEstudiante .map(recorridoMapper::toResponseDTO);
 	   
-   }
+   }*/
 
    @Transactional
    public RecorridoResponseDTO createRecorrido(RecorridoRequestDTO recorridoRequestDTO){
+	   boolean origenAlreadyExists =recorridoRepository.existsByOrigen(recorridoRequestDTO.getOrigen());
 
-	   Estudiante estudiante = estudianteRepository.findById(recorridoRequestDTO.getEstudianteId())
-			   .orElseThrow(()-> new ResourceNotFoundException("Estudiante no encontrado"));
+	   if (origenAlreadyExists) {
+		   throw new BadRequestException("El origen ya está registrado en el sistema!!!.");
+	   }
+
+
+
 
 	   Recorrido recorrido = recorridoMapper.toEntity(recorridoRequestDTO);
-	   recorrido.setEstudiante(estudiante);
+	  // recorrido.setEstudiante(estudiante);
 	   recorridoRepository.save(recorrido);
 	   return recorridoMapper.toResponseDTO(recorrido);
    }
+
+   @Transactional
+   public RecorridoResponseDTO updateReciorrido(Long id, UpdateRecorridoRequestDTO updateRecorridoRequestDTO){
+
+		Recorrido recorridoActual = recorridoRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Recorrido no encontrado!!!"));
+
+		Recorrido recorridoUpdated;
+
+		if(updateRecorridoRequestDTO.getOrigen() != null) recorridoActual.setOrigen(updateRecorridoRequestDTO.getOrigen());
+		if(updateRecorridoRequestDTO.getDestino() != null) recorridoActual.setDestino(updateRecorridoRequestDTO.getDestino());
+		if(updateRecorridoRequestDTO.getDescripcion() != null) recorridoActual.setDescripcion(updateRecorridoRequestDTO.getDescripcion());
+
+		recorridoUpdated = recorridoRepository.save(recorridoActual);
+
+		return recorridoMapper.toResponseDTO(recorridoUpdated);
+   }
+
+
+
  
    
    

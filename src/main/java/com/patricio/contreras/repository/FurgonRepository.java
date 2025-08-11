@@ -22,6 +22,8 @@ public interface FurgonRepository extends JpaRepository<Furgon, Long>{
 
 	boolean existsByPatente(String patente);
 
+	boolean existsByUsuarioTransportista_Id(Long usuarioTransportistaId);
+
 	@Query("SELECT f FROM Furgon f WHERE f.enabled=true")
 	List<Furgon> findAllEnabled();
 }

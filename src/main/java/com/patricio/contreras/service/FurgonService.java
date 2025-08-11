@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.patricio.contreras.domain.entity.User;
+import com.patricio.contreras.domain.enums.Role;
 import com.patricio.contreras.dto.resquest.UpdateFurgonRequestDTO;
 import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.repository.UserRepository;
@@ -62,11 +63,21 @@ public class FurgonService {
 		   throw new BadRequestException("La patente ya está registrada!!!!!!.");
 	   }
 
+	   boolean transportistaAlreadyExists = furgonRepository.existsByUsuarioTransportista_Id(furgonRequestDTO.getUsuarioTransportistaId());
+
+	   if(transportistaAlreadyExists){
+		   throw new BadRequestException("A este transportista le asignaste un furgon!!!!!!.");
+	   }
+
 	   //Cargar usuario transportista desde la bd
 		User user =userRepository.findById(furgonRequestDTO.getUsuarioTransportistaId())
 				.orElseThrow(()->new ResourceNotFoundException("Usuario Transportista no encontrado!!"));
 
 
+
+	   if(user.getRole() != Role.TRANSPORTISTA) {
+	       throw  new ResourceNotFoundException("No  es un usuario transportista!!!");
+	   }
 
 	   Furgon furgon = furgonMapper.toEntity(furgonRequestDTO);
 	   furgon.setUsuarioTransportista(user);

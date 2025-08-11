@@ -1,5 +1,6 @@
 package com.patricio.contreras.dto.response;
 
+import com.patricio.contreras.domain.entity.User;
 import lombok.Data;
 
 @Data
@@ -13,11 +14,5 @@ public class FurgonResponseDTO {
 
 	private boolean enabled;
 
-	private Long usuarioTransportistaId;
-
-	private String usuarioNombres;
-
-	private String usuarioApellidos;
-
-	private String usuarioRole;
+	private UserProfileResponseDTO usuarioTransportista;
 }

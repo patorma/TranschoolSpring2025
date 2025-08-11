@@ -16,8 +16,12 @@ import com.patricio.contreras.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -47,6 +51,20 @@ public class MensualidadService {
       Mensualidad mensualidad = mensualidadRepository.findById(id)
               .orElseThrow(()-> new ResourceNotFoundException("Mensualidad not found with id:" + id));
       return mensualidadMapper.toResponseDTO(mensualidad);
+   }
+
+   @Transactional(readOnly = true)
+   public List<MensualidadResponseDTO> getMyMensualidades(){
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       String email = auth.getName();
+
+       User user = userRepository.findOneByEmail(email)
+               .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+
+       List<Mensualidad> mensualidades = mensualidadRepository.findByUsuarioId(user.getId());
+
+       return mensualidadMapper.toResponseDTOList(mensualidades);
+
    }
 
    @Transactional(readOnly = true)

@@ -11,8 +11,11 @@ import com.patricio.contreras.domain.entity.Recorrido;
 public interface RecorridoRepository extends JpaRepository<Recorrido, Long> {
 	
 	
-	@Query("SELECT r FROM Recorrido r WHERE r.estudiante.id = :estudianteId")
-	Page<Recorrido> findByEstudianteId(@Param("estudianteId") Long estudianteId,Pageable pageable);
-	
-	
+	/*@Query("SELECT r FROM Recorrido r WHERE r.estudiante.id = :estudianteId")
+	Page<Recorrido> findByEstudianteId(@Param("estudianteId") Long estudianteId,Pageable pageable);*/
+
+
+    boolean existsByOrigen(String origen);
+    boolean existsByDestino(String destino);
+    boolean existsByDescripcion(String descripcion);
 }

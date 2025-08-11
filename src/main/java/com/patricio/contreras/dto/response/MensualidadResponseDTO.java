@@ -24,11 +24,9 @@ public class MensualidadResponseDTO {
 
     private boolean enabled;
 
-    private Long usuarioId;
+   private UserProfileResponseDTO usuario;
 
-    private String usuarioNombres;
 
-    private Role usuarioRole;
 
 
 }
