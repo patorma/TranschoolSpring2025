@@ -22,13 +22,7 @@ public class RecorridoController {
 
 	private final RecorridoService recorridoService;
 	
-	@GetMapping("/page")
-	public ResponseEntity<Page<RecorridoResponseDTO>> getAllRecorridos(
-			@PageableDefault(size = 5)Pageable pageable){
-		Page<RecorridoResponseDTO> recorridos = recorridoService.getAllRecorridos(pageable);
-		return ResponseEntity.ok(recorridos);
-	} 
-	
+
 	/*@GetMapping("/page/id-estudiante")
 	public ResponseEntity<Page<RecorridoResponseDTO>> findByIdEstudiante(@RequestParam Long id,@PageableDefault(size = 5) Pageable pageable){
 		

@@ -369,4 +369,12 @@ public class AdminController {
         Integer total = asignacionDeEstudianteService.contarAsignacionesPorFurgon(furgonId);
         return ResponseEntity.ok(total);
     }
+
+    @GetMapping("/recorridos/page")
+    public ResponseEntity<Page<RecorridoResponseDTO>> getAllRecorridos(
+            @PageableDefault(size = 5)Pageable pageable){
+        Page<RecorridoResponseDTO> recorridos = recorridoService.getAllRecorridos(pageable);
+        return ResponseEntity.ok(recorridos);
+    }
+
 }
