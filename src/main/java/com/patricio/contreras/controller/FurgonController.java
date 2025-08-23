@@ -29,20 +29,6 @@ public class FurgonController {
 
 	private final FurgonService furgonService;
 
-/*	@GetMapping
-	public ResponseEntity<List<FurgonResponseDTO>> getAllFurgones(){
-		List<FurgonResponseDTO> furgones = furgonService.getAllFurgones();
-		return ResponseEntity.ok(furgones);
-	}*/
-	
-	/*@PostMapping("/input")
-	public ResponseEntity<FurgonResponseDTO> createFurgon(
-			@RequestBody @Validated FurgonRequestDTO furgonRequestDTO
-			){
-		FurgonResponseDTO furgonResponseDTO = furgonService
-				.CreateFurgon(furgonRequestDTO);
-		return new ResponseEntity<>(furgonResponseDTO,HttpStatus.CREATED);
-	}*/
 
 	@PreAuthorize("hasRole('TRANSPORTISTA')")
 	@GetMapping("my-furgon")
@@ -50,16 +36,5 @@ public class FurgonController {
           FurgonResponseDTO furgon = furgonService.getMyFurgon();
 		  return ResponseEntity.ok(furgon);
 	}
-
-	//.hasRole("TRANSPORTISTA")
-	/*@DeleteMapping("/elimina/{id}")
-	public ResponseEntity<?> deleteFurgon(@PathVariable Long id){
-		Map<String, Object> response = new HashMap<>();
-		 furgonService.deleteFurgon(id);
-		 response.put("mensaje", "El furgon fue eliminado con éxito!");
-		 return new ResponseEntity<Map<String, Object>>(response,HttpStatus.OK);
-	}*/
-
-
 
 }

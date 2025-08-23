@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class EstudianteController {
 
 	private final EstudianteService estudianteService;
-	
 
+    @PreAuthorize("hasRole('APODERADO')")
 	@PostMapping("/estudiante")
 	public ResponseEntity<EstudianteResponseDTO> createEstudiante(
 			@RequestBody @Validated EstudianteRequestDTO
@@ -37,10 +37,5 @@ public class EstudianteController {
 		return ResponseEntity.ok(estudianteResponseDTO);
 	}
 
-	/*	@PreAuthorize("hasRole('TRANSPORTISTA')")
-	@GetMapping("my-furgon")
-	public ResponseEntity<FurgonResponseDTO> getFurgon(){
-          FurgonResponseDTO furgon = furgonService.getMyFurgon();
-		  return ResponseEntity.ok(furgon);
-	}*/
+
 }

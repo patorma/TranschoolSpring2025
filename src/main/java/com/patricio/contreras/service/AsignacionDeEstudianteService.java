@@ -91,7 +91,7 @@ public class AsignacionDeEstudianteService {
 		
 		AsignacionDeEstudiante asignacionEstudianteByIdEstudiante =
 				asignacionDeEstudianteRepository.findByEstudianteId(id).
-						orElseThrow(()->new ResourceNotFoundException("No ser em"));
+						orElseThrow(()->new ResourceNotFoundException("El estudiante no tiene asignaciones"));
 		return asignacionDeEstudianteMapper.toResponseDTO(asignacionEstudianteByIdEstudiante);
 		
 	}
