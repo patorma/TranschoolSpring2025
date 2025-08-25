@@ -182,6 +182,12 @@ public class UserService {
 		  return userMapper.toUserProfileResponseDTOList(usuarios);
 	}
 
+    @Transactional(readOnly = true)
+    public List<UserProfileResponseDTO> getUsuariosTransportistasSinFurgon(){
+        List<User> usuariosTransportistasSinFurgon = userRepository.transportistasSinFurgon();
+        return userMapper.toUserProfileResponseDTOList(usuariosTransportistasSinFurgon);
+    }
+
 	@Transactional(readOnly = true)
 	public UserProfileResponseDTO me(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -15,4 +15,6 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long>{
    //user_id
    List<Estudiante> findByUsuarioApoderadoId(Long usuarioId);
 
+
+
 }

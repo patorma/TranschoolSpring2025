@@ -15,7 +15,7 @@ public class UserProfileResponseDTO {
 
 	public String comuna;
 	private String email;
-	//se elimino el role  ff
+
 	private Role role;
 
 

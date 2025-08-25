@@ -1,12 +1,16 @@
 package com.patricio.contreras.service;
 
 import com.patricio.contreras.domain.entity.Estudiante;
+import com.patricio.contreras.domain.entity.User;
 import com.patricio.contreras.dto.resquest.RecorridoRequestDTO;
 import com.patricio.contreras.dto.resquest.UpdateRecorridoRequestDTO;
 import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.repository.EstudianteRepository;
+import com.patricio.contreras.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +22,14 @@ import com.patricio.contreras.repository.RecorridoRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class RecorridoService {
 
 	private final RecorridoRepository recorridoRepository;
-
+    private final UserRepository userRepository;
 	private final EstudianteRepository estudianteRepository;
 	
 	private final RecorridoMapper recorridoMapper;
@@ -80,6 +86,19 @@ public class RecorridoService {
 
 		return recorridoMapper.toResponseDTO(recorridoUpdated);
    }
+
+    @Transactional(readOnly = true)
+    public List<RecorridoResponseDTO> getRecorridosTransportistas(){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+
+        User user = userRepository.findOneByEmail(email)
+                .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+        List<Recorrido> recorridos = recorridoRepository.obtenerRecorridosTransportista(user.getId());
+        return recorridoMapper.toResponseDTOList(recorridos);
+    }
 
 
 

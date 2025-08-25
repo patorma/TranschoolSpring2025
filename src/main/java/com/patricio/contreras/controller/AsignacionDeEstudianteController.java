@@ -1,8 +1,10 @@
 package com.patricio.contreras.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.patricio.contreras.dto.response.EstudianteResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -31,8 +33,14 @@ import lombok.RequiredArgsConstructor;
 public class AsignacionDeEstudianteController {
 	
 	private final AsignacionDeEstudianteService asignacionDeEstudianteService;
-	
 
+    // El trasportista ve los estudiantes que tiene asignado
+    @PreAuthorize("hasRole('TRANSPORTISTA')")
+    @GetMapping("/my-estudiantes")
+    public  ResponseEntity<List<EstudianteResponseDTO>> getMyEstudiantes(){
+        List<EstudianteResponseDTO> estudiantes = asignacionDeEstudianteService.estudiantesByTransportist();
+        return ResponseEntity.ok(estudiantes);
+    }
 	
 
 	

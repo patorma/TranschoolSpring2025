@@ -2,24 +2,22 @@ package com.patricio.contreras.service;
 
 import java.util.List;
 
-import com.patricio.contreras.domain.entity.Recorrido;
+import com.patricio.contreras.domain.entity.*;
+import com.patricio.contreras.dto.response.EstudianteResponseDTO;
 import com.patricio.contreras.exception.BadRequestException;
-import com.patricio.contreras.repository.RecorridoRepository;
+import com.patricio.contreras.mapper.EstudianteMapper;
+import com.patricio.contreras.repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.patricio.contreras.domain.entity.AsignacionDeEstudiante;
-import com.patricio.contreras.domain.entity.Estudiante;
-import com.patricio.contreras.domain.entity.Furgon;
 import com.patricio.contreras.dto.response.AsignacionDeEstudianteResponseDTO;
 import com.patricio.contreras.dto.resquest.AsignacionDeEstudianteRequestDTO;
 import com.patricio.contreras.exception.ResourceNotFoundException;
 import com.patricio.contreras.mapper.AsignacionDeEstudianteMapper;
-import com.patricio.contreras.repository.AsignacionDeEstudianteRepository;
-import com.patricio.contreras.repository.EstudianteRepository;
-import com.patricio.contreras.repository.FurgonRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,9 +26,9 @@ import lombok.RequiredArgsConstructor;
 public class AsignacionDeEstudianteService {
 	
 	private final AsignacionDeEstudianteRepository asignacionDeEstudianteRepository;
-	
+    private final UserRepository userRepository;
 	private final EstudianteRepository estudianteRepository;
-	
+    private final EstudianteMapper estudianteMapper;
 	private final FurgonRepository furgonRepository;
 
 	private final RecorridoRepository recorridoRepository;
@@ -119,5 +117,16 @@ public class AsignacionDeEstudianteService {
 	public Integer contarAsignacionesPorFurgon(Long furgonId) {
 		return asignacionDeEstudianteRepository.contarEstudiantesAsignados(furgonId);
 	}
+
+    @Transactional(readOnly = true)
+    public List<EstudianteResponseDTO> estudiantesByTransportist(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+        User user = userRepository.findOneByEmail(email)
+                .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
+        List<Estudiante> estudiantes = asignacionDeEstudianteRepository.obtenerEstudiantesTransportista(user.getId());
+        return estudianteMapper.toResponseDTOList(estudiantes);
+    }
 
 }

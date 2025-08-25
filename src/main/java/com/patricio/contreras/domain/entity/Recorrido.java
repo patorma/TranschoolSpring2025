@@ -31,9 +31,6 @@ public class Recorrido {
 	private String descripcion;
 	
 	
-	/*@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "estudiante_id",nullable = false,referencedColumnName = "id")
-	@JsonIgnoreProperties({"hibernateLazyInitializer","hadler"})
-	private Estudiante estudiante;*/
+
 
 }

@@ -131,4 +131,12 @@ public class FurgonService {
 		furgon.setEnabled(true);
 		furgonRepository.save(furgon);
 	}
+
+    // Lista de furgones que no tienen  asignado estudiantes ni recorridos
+    @Transactional(readOnly = true)
+    public List<FurgonResponseDTO> getFurgonesSinAsignacion(){
+        List<Furgon> furgonesSinAsignaciones = furgonRepository.furgonesSinAsignacion();
+
+        return furgonMapper.toResponseDTOList(furgonesSinAsignaciones);
+    }
 }

@@ -43,11 +43,12 @@ public class WebSecurityConfig {
 						.requestMatchers("/auth/sign-up-2", "/auth/sign-in","/auth/crear").permitAll()
 						// Permite el acceso sin autenticación a las rutas de documentación Swagger.
 						.requestMatchers("/api/v1/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
-						.requestMatchers("/asignaciones/**").hasRole("ADMIN") // Requiere rol ADMIN para /asignaciones/**
+						.requestMatchers("/asignaciones/**").hasRole("TRANSPORTISTA") // Requiere rol ADMIN para /asignaciones/**
 						.requestMatchers("/admin/**").hasRole("ADMIN")    // Requiere rol ADMIN.+
 						.requestMatchers("/furgones/**").hasRole("TRANSPORTISTA")
 						.requestMatchers("/estudiantes/**").hasRole("APODERADO")
 						.requestMatchers("/mensualidades/**").hasRole("APODERADO")
+                        .requestMatchers("/recorridos/**").hasRole("TRANSPORTISTA")
 						// Requiere autenticación para cualquier otra solicitud.
 						.anyRequest()
 						.authenticated()
