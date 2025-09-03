@@ -28,12 +28,7 @@ public class AuthController {
 	    return new ResponseEntity<>(authResponse, HttpStatus.OK);
 	  }
 
-	  //para registrar  un usuario
-	 /* @PostMapping("/sign-up-2")
-	  public ResponseEntity<UserProfileResponseDTO> register(@RequestBody @Validated SignupRequestDTO signupRequestDTO) {
-	    UserProfileResponseDTO userProfileResponseDTO = userService.signup(signupRequestDTO);
-	    return new ResponseEntity<>(userProfileResponseDTO, HttpStatus.CREATED);
-	  }*/
+
       @PostMapping("/crear")
 	  public ResponseEntity<UserProfileResponseDTO> crear(@RequestBody @Validated SignupRequestDTO signupRequestDTO){
 		  UserProfileResponseDTO userProfileResponseDTO =userService.crearUsuario(signupRequestDTO);
