@@ -16,6 +16,8 @@ public class UserProfileResponseDTO {
 	public String comuna;
 	private String email;
 
+    private String  telefono;
+
 	private Role role;
 
 
