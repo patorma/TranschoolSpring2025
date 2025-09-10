@@ -23,7 +23,7 @@ public class MensualidadController {
 
     @PreAuthorize("hasRole('APODERADO')")
     @GetMapping("my-mensualidades/page")
-    public ResponseEntity<Page<MensualidadResponseDTO>> getMyMemnsualidad(
+    public ResponseEntity<Page<MensualidadResponseDTO>> getMyMensualidad(
             @PageableDefault(size = 5) Pageable pageable
     ){
        Page<MensualidadResponseDTO> mensualidades =mensualidadService.getMyMensualidades(pageable);
