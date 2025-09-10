@@ -18,7 +18,7 @@ public interface MensualidadRepository extends JpaRepository<Mensualidad,Long> {
     Page<Mensualidad> findByUsuarioId(@Param("usuarioId") Long usuarioId, Pageable pageable);
 
     @Query("SELECT m FROM Mensualidad m WHERE m.usuario.id = :usuarioId AND  m.enabled=true")
-    List<Mensualidad> findByUsuarioId(Long usuarioId);
+    Page<Mensualidad> findByUsuarioIdMy(Long usuarioId,Pageable pageable);//ver mensualidades de un apoderado
 
     @Query("SELECT m FROM Mensualidad m WHERE m.estado = :estado")
     Page<Mensualidad> findByEstado(@Param("estado") Estado estado,Pageable pageable);

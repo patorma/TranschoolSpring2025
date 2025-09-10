@@ -54,16 +54,16 @@ public class MensualidadService {
    }
 
    @Transactional(readOnly = true)
-   public List<MensualidadResponseDTO> getMyMensualidades(){
+   public Page<MensualidadResponseDTO> getMyMensualidades(Pageable pageable){
        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
        String email = auth.getName();
 
        User user = userRepository.findOneByEmail(email)
                .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
 
-       List<Mensualidad> mensualidades = mensualidadRepository.findByUsuarioId(user.getId());
+       Page<Mensualidad> mensualidades = mensualidadRepository.findByUsuarioIdMy(user.getId(),pageable);
 
-       return mensualidadMapper.toResponseDTOList(mensualidades);
+       return mensualidades.map(mensualidadMapper::toResponseDTO);
 
    }
 
