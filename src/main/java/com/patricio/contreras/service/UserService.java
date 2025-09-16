@@ -4,6 +4,8 @@ import com.patricio.contreras.dto.resquest.UpdateUserRequestDTO;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -164,10 +166,10 @@ public class UserService {
 	  }
 
 	  @Transactional(readOnly = true)
-	  public List<UserProfileResponseDTO> getUsuariosSinAdmin() {
+	  public Page<UserProfileResponseDTO> getUsuariosSinAdmin(Pageable pageable) {
 
-		List<User> usuarios = userRepository.findByRoleNot(Role.ADMIN);
-		return userMapper.toUserProfileResponseDTOList(usuarios);
+		Page<User> usuarios = userRepository.findByRoleNot(Role.ADMIN,pageable);
+        return usuarios.map(userMapper::toUserProfileResponseDTO);
 	}
 
 	@Transactional(readOnly = true)

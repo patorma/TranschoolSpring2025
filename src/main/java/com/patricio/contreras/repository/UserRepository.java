@@ -3,10 +3,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.patricio.contreras.domain.enums.Role;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.patricio.contreras.domain.entity.User;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Page;
 
 public interface UserRepository extends JpaRepository<User,Long>{
 
@@ -16,7 +18,8 @@ public interface UserRepository extends JpaRepository<User,Long>{
 		//Verificar si el usuario existe mediante un correo
 		boolean existsByEmail(String email);
 
-	  List<User> findByRoleNot( Role role);
+	  Page<User> findByRoleNot(Role role, Pageable pageable);
+
 	  List<User> findByRole(Role role);
 
       @Query(value = "SELECT id, nombres,apellidos, comuna,email,role,password,telefono " +

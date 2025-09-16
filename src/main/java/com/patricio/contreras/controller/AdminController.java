@@ -41,11 +41,15 @@ public class AdminController {
 
         return new ResponseEntity<>(userProfileResponseDTO, HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/usuarios")
-    public ResponseEntity<List<UserProfileResponseDTO>> listarUsuariosSinAdmin(){
 
-        List<UserProfileResponseDTO> usuarios = userService.getUsuariosSinAdmin();
+    //se cambia a paginacion la lista de usuarios sin rol admin
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/usuarios/page")
+    public ResponseEntity<Page<UserProfileResponseDTO>> listarUsuariosSinAdmin(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+
+        Page<UserProfileResponseDTO> usuarios = userService.getUsuariosSinAdmin(pageable);
         return ResponseEntity.ok(usuarios);
     }
 
