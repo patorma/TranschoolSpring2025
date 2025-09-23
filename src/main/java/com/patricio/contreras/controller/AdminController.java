@@ -214,6 +214,28 @@ public class AdminController {
     // se desactiva el pago con un soft delete
 
     @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/user/eliminar/{id}")
+    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            userService.deleteUser(id);
+            response.put("mensaje","El user fue eliminado con éxito!");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (ResourceNotFoundException e){
+            // Si el user no se encuentra, captura la excepción y retorna un 404 NOT FOUND
+            response.put("mensaje", e.getMessage()); // El mensaje de la excepción: "User no encontrado con ID: ..."
+            response.put("error", "Not Found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); // Retorna 404
+        }catch (Exception e) {
+            // Captura cualquier otra excepción inesperada
+            response.put("mensaje", "Ocurrió un error inesperado al eliminar el user.");
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); // Retorna 500
+        }
+    }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/pago/eliminar/{id}")
     public ResponseEntity<Map<String, Object>> deletePago(@PathVariable Long id){
         Map<String, Object> response = new HashMap<>();

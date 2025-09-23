@@ -200,4 +200,11 @@ public class UserService {
 		return userMapper.toUserProfileResponseDTO(user);
 	}
 
+    @Transactional
+    public void  deleteUser(Long id){
+        userRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("User not fund with" + id));
+        userRepository.deleteById(id);
+    }
+
 }
