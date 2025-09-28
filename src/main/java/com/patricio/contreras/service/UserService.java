@@ -173,15 +173,15 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<UserProfileResponseDTO> getUsuariosTransportista(){
-		  List<User> usuarios = userRepository.findByRole(Role.TRANSPORTISTA);
-		  return userMapper.toUserProfileResponseDTOList(usuarios);
+	public Page<UserProfileResponseDTO> getUsuariosTransportista(Pageable pageable){
+		  Page<User> usuarios = userRepository.findByRole(Role.TRANSPORTISTA,pageable);
+		  return usuarios.map(userMapper::toUserProfileResponseDTO);
 	}
 
 	@Transactional(readOnly = true)
-	public List<UserProfileResponseDTO> getUsuariosApoderados(){
-		  List<User> usuarios = userRepository.findByRole(Role.APODERADO);
-		  return userMapper.toUserProfileResponseDTOList(usuarios);
+	public Page<UserProfileResponseDTO> getUsuariosApoderados(Pageable pageable){
+		  Page<User> usuarios = userRepository.findByRole(Role.APODERADO,pageable);
+		  return usuarios.map(userMapper::toUserProfileResponseDTO);
 	}
 
     @Transactional(readOnly = true)

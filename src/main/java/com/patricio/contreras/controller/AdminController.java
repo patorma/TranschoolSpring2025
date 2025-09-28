@@ -62,15 +62,19 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/usuarios/transportistas")
-    public ResponseEntity<List<UserProfileResponseDTO>> listarUsuaiosTransportistas(){
-        List<UserProfileResponseDTO> usuariosTransportistas = userService.getUsuariosTransportista();
+    @GetMapping("/usuarios/transportistas/page")
+    public ResponseEntity<Page<UserProfileResponseDTO>> listarUsuaiosTransportistas(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<UserProfileResponseDTO> usuariosTransportistas = userService.getUsuariosTransportista(pageable);
         return ResponseEntity.ok(usuariosTransportistas);
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/usuarios/apoderados")
-    public ResponseEntity<List<UserProfileResponseDTO>> listarUsuariosApoderados(){
-        List<UserProfileResponseDTO> usuariosApoderados = userService.getUsuariosApoderados();
+    @GetMapping("/usuarios/apoderados/page")
+    public ResponseEntity<Page<UserProfileResponseDTO>> listarUsuariosApoderados(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<UserProfileResponseDTO> usuariosApoderados = userService.getUsuariosApoderados(pageable);
         return ResponseEntity.ok(usuariosApoderados);
     }
 

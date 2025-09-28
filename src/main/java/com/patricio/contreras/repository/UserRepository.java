@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User,Long>{
 
 	  Page<User> findByRoleNot(Role role, Pageable pageable);
 
-	  List<User> findByRole(Role role);
+	  Page<User> findByRole(Role role,Pageable pageable);
 
       @Query(value = "SELECT id, nombres,apellidos, comuna,email,role,password,telefono " +
               "FROM Users  WHERE role='TRANSPORTISTA' AND id NOT IN" +
