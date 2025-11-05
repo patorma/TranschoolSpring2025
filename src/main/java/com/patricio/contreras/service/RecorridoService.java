@@ -88,7 +88,7 @@ public class RecorridoService {
    }
 
     @Transactional(readOnly = true)
-    public List<RecorridoResponseDTO> getRecorridosTransportistas(){
+    public Page<RecorridoResponseDTO> getRecorridosTransportistas(Pageable pageable){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
@@ -96,8 +96,8 @@ public class RecorridoService {
 
         User user = userRepository.findOneByEmail(email)
                 .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
-        List<Recorrido> recorridos = recorridoRepository.obtenerRecorridosTransportista(user.getId());
-        return recorridoMapper.toResponseDTOList(recorridos);
+        Page<Recorrido> recorridos = recorridoRepository.obtenerRecorridosTransportista(user.getId(),pageable);
+        return  recorridos.map(recorridoMapper::toResponseDTO);
     }
 
 

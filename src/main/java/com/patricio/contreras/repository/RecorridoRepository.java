@@ -22,7 +22,7 @@ public interface RecorridoRepository extends JpaRepository<Recorrido, Long> {
             "ON(u.id = f.usuario_transportista_id) INNER JOIN  Asignaciones_De_Estudiantes " +
             "asig ON(f.id = asig.furgon_id) INNER JOIN Recorridos r ON(asig.recorrido_id = r.id ) " +
             "WHERE u.id = ?1",nativeQuery = true)
-    List<Recorrido> obtenerRecorridosTransportista( @Param("u.id") Long idTransportista);
+    Page<Recorrido> obtenerRecorridosTransportista( @Param("u.id") Long idTransportista,Pageable pageable);
 
     boolean existsByOrigen(String origen);
     boolean existsByDestino(String destino);

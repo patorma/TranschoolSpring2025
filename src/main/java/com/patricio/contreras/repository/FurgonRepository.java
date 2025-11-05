@@ -5,6 +5,8 @@ package com.patricio.contreras.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -25,7 +27,7 @@ public interface FurgonRepository extends JpaRepository<Furgon, Long>{
 	boolean existsByUsuarioTransportista_Id(Long usuarioTransportistaId);
 
 	@Query("SELECT f FROM Furgon f WHERE f.enabled=true")
-	List<Furgon> findAllEnabled();
+    Page<Furgon> findAllEnabled(Pageable pageabl);
 
     @Query(value = "SELECT  id, patente, descripcion, usuario_transportista_id,enabled " +
             "FROM Furgones WHERE id NOT IN (SELECT furgon_id FROM Asignaciones_De_Estudiantes)",nativeQuery = true)

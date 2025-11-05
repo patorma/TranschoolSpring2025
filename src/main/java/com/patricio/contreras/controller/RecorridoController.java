@@ -27,9 +27,11 @@ public class RecorridoController {
 
    // El transportista ve los recorridos que tiene asignados
     @PreAuthorize("hasRole('TRANSPORTISTA')")
-    @GetMapping("/my-recorridos")
-    public  ResponseEntity<List<RecorridoResponseDTO>> getMyRecorridos(){
-        List<RecorridoResponseDTO> recorridos = recorridoService.getRecorridosTransportistas();
+    @GetMapping("/my-recorridos/page")
+    public  ResponseEntity<Page<RecorridoResponseDTO>> getMyRecorridos(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<RecorridoResponseDTO> recorridos = recorridoService.getRecorridosTransportistas(pageable);
         return ResponseEntity.ok(recorridos);
     }
 	

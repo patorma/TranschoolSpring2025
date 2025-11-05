@@ -55,9 +55,11 @@ public class AdminController {
 
     // Se lista los transportistas sin furgon
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/usuarios-transportistas/sin-furgon")
-    public ResponseEntity<List<UserProfileResponseDTO>> listarTransportistasSinFurgon(){
-        List<UserProfileResponseDTO> usuariosTransportistasSinFurgon = userService.getUsuariosTransportistasSinFurgon();
+    @GetMapping("/usuarios-transportistas/sin-furgon/page")
+    public ResponseEntity<Page<UserProfileResponseDTO>> listarTransportistasSinFurgon(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<UserProfileResponseDTO> usuariosTransportistasSinFurgon = userService.getUsuariosTransportistasSinFurgon(pageable);
         return ResponseEntity.ok(usuariosTransportistasSinFurgon);
     }
 
@@ -294,9 +296,11 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/furgones")
-    public ResponseEntity<List<FurgonResponseDTO>> getAllFurgones(){
-        List<FurgonResponseDTO> furgones = furgonService.getAllFurgones();
+    @GetMapping("/furgones/page")
+    public ResponseEntity<Page<FurgonResponseDTO>> getAllFurgones(
+            @PageableDefault(size = 5)Pageable pageable
+    ){
+        Page<FurgonResponseDTO> furgones = furgonService.getAllFurgones(pageable);
         return ResponseEntity.ok(furgones);
     }
 

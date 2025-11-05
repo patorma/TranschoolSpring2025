@@ -9,6 +9,8 @@ import com.patricio.contreras.domain.enums.Role;
 import com.patricio.contreras.dto.resquest.UpdateFurgonRequestDTO;
 import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,10 +37,10 @@ public class FurgonService {
 	private final UserRepository userRepository;
 	
 	@Transactional(readOnly = true)
-	public List<FurgonResponseDTO> getAllFurgones(){
-		List<Furgon> furgones = furgonRepository.findAllEnabled();
+	public Page<FurgonResponseDTO> getAllFurgones(Pageable pageable){
+		Page<Furgon> furgones = furgonRepository.findAllEnabled(pageable);
 		
-		return furgonMapper.toResponseDTOList(furgones);
+		return  furgones.map(furgonMapper::toResponseDTO);
 	}
 
 	@Transactional(readOnly = true)

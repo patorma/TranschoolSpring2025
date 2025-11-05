@@ -185,9 +185,9 @@ public class UserService {
 	}
 
     @Transactional(readOnly = true)
-    public List<UserProfileResponseDTO> getUsuariosTransportistasSinFurgon(){
-        List<User> usuariosTransportistasSinFurgon = userRepository.transportistasSinFurgon();
-        return userMapper.toUserProfileResponseDTOList(usuariosTransportistasSinFurgon);
+    public Page<UserProfileResponseDTO> getUsuariosTransportistasSinFurgon(Pageable pageable){
+        Page<User> usuariosTransportistasSinFurgon = userRepository.transportistasSinFurgon(pageable);
+        return usuariosTransportistasSinFurgon.map(userMapper::toUserProfileResponseDTO);
     }
 
 	@Transactional(readOnly = true)
