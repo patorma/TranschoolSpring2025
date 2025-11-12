@@ -10,6 +10,8 @@ import com.patricio.contreras.exception.BadRequestException;
 import com.patricio.contreras.exception.ResourceNotFoundException;
 import com.patricio.contreras.repository.RecorridoRepository;
 import com.patricio.contreras.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,15 +46,15 @@ public class EstudianteService {
 	}
 	//ver los estudiantes de un apoderadoS
 	@Transactional(readOnly = true)
-	public List<EstudianteResponseDTO> apoderadoEstudiantes(){
+	public Page<EstudianteResponseDTO> apoderadoEstudiantes(Pageable pageable){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 
 		User user = userRepository.findOneByEmail(email)
 				.orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"));
-		List<Estudiante> estudiantes = estudianteRepository.findByUsuarioApoderadoId(user.getId());
+        Page<Estudiante> estudiantes = estudianteRepository.findByUsuarioApoderadoId(pageable,user.getId());
 
-		return estudianteMapper.toResponseDTOList(estudiantes);
+		return estudiantes.map(estudianteMapper::toResponseDTO);
 	}
 	@Transactional
 	public EstudianteResponseDTO createEstudiante(EstudianteRequestDTO estudianteRequestDTO){

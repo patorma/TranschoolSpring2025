@@ -3,6 +3,9 @@ package com.patricio.contreras.controller;
 import java.util.List;
 
 import com.patricio.contreras.dto.resquest.EstudianteRequestDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,9 +34,11 @@ public class EstudianteController {
 		return new ResponseEntity<>(estudianteResponseDTO, HttpStatus.CREATED);
 	}
 	@PreAuthorize("hasRole('APODERADO')")
-	@GetMapping("/apoderado/estudiantes")
-	public ResponseEntity<List<EstudianteResponseDTO>> getMyEstudiantes(){
-		List<EstudianteResponseDTO> estudianteResponseDTO = estudianteService.apoderadoEstudiantes();
+	@GetMapping("/apoderado/estudiantes/page")
+	public ResponseEntity<Page<EstudianteResponseDTO>> getMyEstudiantes(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<EstudianteResponseDTO> estudianteResponseDTO = estudianteService.apoderadoEstudiantes(pageable);
 		return ResponseEntity.ok(estudianteResponseDTO);
 	}
 
