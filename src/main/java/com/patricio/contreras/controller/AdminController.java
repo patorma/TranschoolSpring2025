@@ -350,9 +350,11 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/estudiantes")
-    public ResponseEntity<List<EstudianteResponseDTO>> getAllEstudiantes(){
-        List<EstudianteResponseDTO> estudiantes = estudianteService.getAllEstudiantes();
+    @GetMapping("/estudiantes/page")
+    public ResponseEntity<Page<EstudianteResponseDTO>> getAllEstudiantes(
+            @PageableDefault(size = 5)Pageable pageable
+    ){
+        Page<EstudianteResponseDTO> estudiantes = estudianteService.getAllEstudiantes(pageable);
         return ResponseEntity.ok(estudiantes);
     }
 

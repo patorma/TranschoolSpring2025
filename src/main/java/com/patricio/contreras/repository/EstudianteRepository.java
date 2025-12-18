@@ -13,6 +13,8 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long>{
 	
    Optional<Estudiante> findByNombres(String nombres);
 
+
+
    boolean existsByEmail(String email);
    //user_id
    Page<Estudiante> findByUsuarioApoderadoId(Pageable pageabl,Long usuarioId);

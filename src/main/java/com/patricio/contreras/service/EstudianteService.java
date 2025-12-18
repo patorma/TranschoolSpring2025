@@ -36,13 +36,14 @@ public class EstudianteService {
 	private final RecorridoRepository recorridoRepository;
 	
 	private final EstudianteMapper estudianteMapper;
-	
+
+    // esto esta relacionado con el admin
 	@Transactional(readOnly = true)
-	public List<EstudianteResponseDTO> getAllEstudiantes(){
+	public Page<EstudianteResponseDTO> getAllEstudiantes(Pageable pageable){
 		
-		List<Estudiante> estudiantes  = estudianteRepository.findAll();
+		Page<Estudiante> estudiantes  = estudianteRepository.findAll(pageable);
 		
-		return estudianteMapper.toResponseDTOList(estudiantes);
+		return estudiantes.map(estudianteMapper::toResponseDTO);
 	}
 	//ver los estudiantes de un apoderadoS
 	@Transactional(readOnly = true)
