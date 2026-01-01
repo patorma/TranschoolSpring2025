@@ -21,6 +21,22 @@ La API gestiona la lógica de negocio para administradores, transportistas y apo
 
 ---
 
+##  Documentación Interactiva (Swagger)
+
+El proyecto integra **Swagger UI**, lo que permite visualizar y probar los endpoints sin necesidad de herramientas externas como Postman.
+
+### Acceso
+La interfaz está disponible en la siguiente URL una vez iniciada la aplicación:
+`http://localhost:8080/api/v1/swagger-ui/index.html`
+
+### Manejo de Paginación (Pageable)
+Los endpoints de listado (como `/admin/furgones/page`) están optimizados para recibir parámetros de paginación estándar de Spring Data:
+* `page`: Número de página (ej. `0`).
+* `size`: Cantidad de registros por página (ej. `5`).
+* `sort`: Criterio de ordenación (ej. `patente,asc`).
+
+---
+
 ##  Arquitectura
 
 - Basado en arquitectura en tres capas: `Capa de presentación(controller,dto) → Capa de Lógica de negocio(service,domain,mapper,exeption) → Capa de Persistencia(repository) → Capas Tranversales/Infreaestructura(config,security)`
