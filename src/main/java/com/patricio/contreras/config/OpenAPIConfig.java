@@ -54,10 +54,10 @@ public class OpenAPIConfig {
 	   
 	    // Información general de la API
 	    Info info = new Info()
-	      .title("API de Reservaciones de Restaurante")
+	      .title("API de Administracion de Furgones y Pagos de mensualidades")
 	      .version("1.0")
 	      .contact(contact)
-	      .description("Esta API expone endpoints para gestionar reservaciones de restaurante.")
+	      .description("Esta API expone endpoints para gestionar furgones y pagos de mensualidades.")
 	      .termsOfService("https://www.hampcode.com/terms")
 	      .license(mitLicense);
 	    
