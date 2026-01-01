@@ -1,16 +1,19 @@
-# Transchool2025
+# Transchool2025 - Bakend API
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-brightgreen?style=for-the-badge&logo=springboot)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=for-the-badge&logo=postgresql)
 
 Sistema de gestión de transporte escolar y pagos desarrollado con **Spring Boot** y **Spring Security con JWT**. Diseñado para administrar usuarios con distintos roles y gestionar sus interacciones en el contexto de transporte escolar.
 
 ---
 
-## 🧩 Descripción
+##  Descripción
 
 Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a transportistas, administrar pagos, y aplicar reglas de negocio como multa por atraso de fecha si se superan ciertos días de vencimiento.
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+##  Tecnologías utilizadas
 
 - Java 21+
 - Spring Boot 3.x
@@ -23,7 +26,7 @@ Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a tra
 
 ---
 
-## 🧱 Arquitectura
+##  Arquitectura
 
 - Basado en arquitectura en tres capas: `Capa de presentación(controller,dto) → Capa de Lógica de negocio(service,domain,mapper,exeption) → Capa de Persistencia(repository) → Capas Tranversales/Infreaestructura(config,security)`
 - Validación con anotaciones como `@Valid`, `@NotBlank`, `@Size`,  `@NotNull`
@@ -32,7 +35,7 @@ Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a tra
 
 ---
 
-## 🎯 Módulos principales
+##  Módulos principales
 
 | Módulo     | Descripción                                      |
 | ---------- | ------------------------------------------------ |
@@ -44,7 +47,7 @@ Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a tra
 
 ---
 
-## 🔐 Roles y permisos
+##  Roles y permisos
 
 | Rol             | Acciones                                                           |
 | --------------- | ------------------------------------------------------------------ |
