@@ -1,4 +1,4 @@
-# Transchool2025 - Bakend API
+# Transchool 2025 - Bakend API
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-brightgreen?style=for-the-badge&logo=springboot)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=for-the-badge&logo=postgresql)
@@ -12,16 +12,12 @@
 La API gestiona la lógica de negocio para administradores, transportistas y apoderados, permitiendo el control de furgones, asignaciones de estudiantes y seguimiento de mensualidades.
 ---
 
-##  Tecnologías utilizadas
-
-- Java 21+
-- Spring Boot 3.x
-- Spring Security + JWT
-- Spring Data JPA
-- PostgreSQL
-- Maven
-
-*Nota: Docker y pruebas unitarias aún no están integrados.*
+##  Stack Tecnológico
+* **Core:** Java 21 (LTS) & Spring Boot 3.4.1.
+* **Seguridad:** Spring Security con autenticación basada en **JWT (JSON Web Tokens)**.
+* **Persistencia:** Spring Data JPA con **PostgreSQL**.
+* **Documentación:** Springdoc-OpenAPI (Swagger UI) 2.8.5.
+* **Mapeo y Utilidades:** ModelMapper & Lombok.
 
 ---
 
