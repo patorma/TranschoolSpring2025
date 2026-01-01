@@ -37,6 +37,41 @@ Los endpoints de listado (como `/admin/furgones/page`) están optimizados para r
 
 ---
 
+##  Seguridad y Roles
+La aplicación implementa un sistema de control de acceso basado en roles (RBAC). Las rutas están protegidas según el perfil del usuario:
+
+| Rol | Alcance de Acceso |
+| :--- | :--- |
+| **ADMIN** | Gestión total de usuarios, furgones ,asignaciones y registro de las mensualidades y pagos de estas últimas. |
+| **TRANSPORTISTA** | Gestión de recorridos y visualización de furgones asignados. |
+| **APODERADO** | Gestión de estudiantes y revisión de mensualidades. |
+
+> **Nota:** Todos los recursos, excepto los endpoints de `/auth/**` y la documentación de Swagger, requieren un token JWT válido en el encabezado de la petición (`Authorization: Bearer <token>`).
+
+---
+
+##  Instalación y Ejecución
+
+### 1. Requisitos
+* Java 21.
+* Maven 3.9+.
+* PostgreSQL 16 (o superior).
+
+### 2. Configuración
+Ajusta las credenciales de tu base de datos en el archivo:
+`src/main/resources/application.properties`
+
+### 3. Compilación y Despliegue
+Debido a la estricta validación del contexto de Spring 3.4, se recomienda compilar omitiendo los tests en la primera ejecución:
+
+```bash
+# Limpiar y compilar el proyecto
+mvn clean install -DskipTests
+
+# Ejecutar la aplicación
+mvn spring-boot:run
+
+
 ##  Arquitectura
 
 - Basado en arquitectura en tres capas: `Capa de presentación(controller,dto) → Capa de Lógica de negocio(service,domain,mapper,exeption) → Capa de Persistencia(repository) → Capas Tranversales/Infreaestructura(config,security)`
@@ -68,7 +103,7 @@ Los endpoints de listado (como `/admin/furgones/page`) están optimizados para r
 
 ---
 
-## 🚀 Ejecución local
+##  Ejecución local
 
 1. Clonar repositorio:
 git clone https://github.com/patorma/TranschoolSpring2025.git
@@ -80,7 +115,7 @@ cd transchool2025
 - Una vez que clonaste el proyecto revisa el archivo Transchool.postman_collection.json e importalo en postman para tener las rutas del sistema . De lo anterior no olvides ocupar postgresql y crear la base de datos: transchool_db.
 
 
-🚀 Pendiente por implementar
+ Pendiente por implementar
 Integración con Docker
 
 Pruebas unitarias con JUnit y Mockito
