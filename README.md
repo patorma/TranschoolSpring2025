@@ -7,8 +7,9 @@
 
 ##  Descripción del Proyecto
 
-Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a transportistas, administrar pagos, y aplicar reglas de negocio como multa por atraso de fecha si se superan ciertos días de vencimiento.
+**Transchool 2025** es una solución robusta para la gestión de transporte escolar, desarrollada sobre una arquitectura moderna. Este proyecto representa la evolución técnica de una versión original de 2016, migrada a **Spring Boot 3.4.1** para garantizar escalabilidad, seguridad y un rendimiento óptimo.
 
+La API gestiona la lógica de negocio para administradores, transportistas y apoderados, permitiendo el control de furgones, asignaciones de estudiantes y seguimiento de mensualidades.
 ---
 
 ##  Tecnologías utilizadas
