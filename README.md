@@ -81,27 +81,8 @@ mvn spring-boot:run
 
 ---
 
-##  Módulos principales
 
-| Módulo     | Descripción                                      |
-| ---------- | ------------------------------------------------ |
-| `auth`     | Registro, login,autenticación con JWT y permios  |
-| `admin`    | Gestión de usuarios, pagos, furgones             |
-| `furgones` | Asignación de furgón único a un transportista    |
-| `pagos`    | Registro de pagos y cálculo de mora automática   |
-|`Estudiantes`| Registro de Estudiantes por parte de los apóderados|
 
----
-
-##  Roles y permisos
-
-| Rol             | Acciones                                                           |
-| --------------- | ------------------------------------------------------------------ |
-| `ADMIN`         | Ver todos los usuarios, asignar furgones, registrar transportistas,regsitrar pagos de apoderados, registrar furgones |
-| `TRANSPORTISTA` | Ver su furgón asignado y recorridos de los estudiantes                                             |
-| `APODERADO`     | Ver sus propios pagos y estudiantes que ingresó                                              |
-
----
 
 ##  Ejecución local
 
