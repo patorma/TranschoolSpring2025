@@ -3,11 +3,9 @@
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.1-brightgreen?style=for-the-badge&logo=springboot)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?style=for-the-badge&logo=postgresql)
 
-Sistema de gestión de transporte escolar y pagos desarrollado con **Spring Boot** y **Spring Security con JWT**. Diseñado para administrar usuarios con distintos roles y gestionar sus interacciones en el contexto de transporte escolar.
 
----
 
-##  Descripción
+##  Descripción del Proyecto
 
 Transchool2025 permite lo siguiente:  registrar usuarios, asignar furgones a transportistas, administrar pagos, y aplicar reglas de negocio como multa por atraso de fecha si se superan ciertos días de vencimiento.
 
