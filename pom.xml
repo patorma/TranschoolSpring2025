@@ -14,7 +14,7 @@
 
 	<groupId>com.patricio.contreras</groupId>
 	<artifactId>Transchool2025</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>Transchool2025</name>
 	<description>Nueva version del proyecto del 2016 de transchool</description>
 	<url />
