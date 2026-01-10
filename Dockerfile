@@ -1,5 +1,25 @@
-FROM openjdk:21-jdk-slim
-ARG JAR_FILE=target/Transchool2025-0.0.1.jar
-COPY ${JAR_FILE} Transchool2025.jar
+# ========================
+# BUILD STAGE
+# ========================
+FROM maven:3.9.9-eclipse-temurin-21 AS build
+
+WORKDIR /app
+
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# ========================
+# RUNTIME STAGE
+# ========================
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/target/Transchool2025-0.0.1.jar app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "Transchool2025.jar"]
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
