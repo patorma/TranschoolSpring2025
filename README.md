@@ -19,7 +19,7 @@ La API gestiona la lógica de negocio para administradores, transportistas y apo
 * **Seguridad:** Spring Security con autenticación basada en **JWT (JSON Web Tokens)**.
 * **Persistencia:** Spring Data JPA con **PostgreSQL**.
 * **Maven.**
-* **Docker & Docker Compose
+* *Docker & Docker Compose
 * **Documentación:** Springdoc-OpenAPI (Swagger UI) 2.8.5.
 * **Mapeo y Utilidades:** ModelMapper & Lombok.
 
