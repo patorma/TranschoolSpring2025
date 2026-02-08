@@ -1,2 +1,4 @@
 INSERT INTO users (nombres,apellidos,comuna,telefono,email,password,role) VALUES ('Alex','Guzman','Santiago','432469265','alex@gmail.com','$2a$10$NZuI0GMZFJClfSLRoSftiuRByHPMhFBA05PT3VMv5mEiUXz6b5qxa','ADMIN')
     ON CONFLICT (email) DO NOTHING;
+
+SELECT * FROM asignaciones_de_estudiantes;
