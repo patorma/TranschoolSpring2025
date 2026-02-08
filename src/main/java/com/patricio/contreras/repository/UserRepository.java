@@ -27,8 +27,8 @@ public interface UserRepository extends JpaRepository<User,Long>{
               " (SELECT usuario_transportista_id  FROM Furgones)",nativeQuery = true)
       Page<User> transportistasSinFurgon(Pageable pageable);
 
-	@Query(value = "SELECT id, nombres,apellidos, comuna,email,role,password,telefono" +
-			"FROM Users  WHERE role='TRANSPORTISTA' AND id IN" +
-			"(SELECT usuario_transportista_id  FROM Furgones)",nativeQuery = true)
+	@Query(value = "SELECT \"id\", nombres, apellidos, comuna, email, role, password, telefono " +
+			"FROM Users WHERE role='TRANSPORTISTA' AND id IN " +
+			"(SELECT usuario_transportista_id FROM Furgones)", nativeQuery = true)
 	Page <User> transportistasConFurgon(Pageable pageable);
 }

@@ -62,15 +62,19 @@ public class AdminController {
         Page<UserProfileResponseDTO> usuariosTransportistasSinFurgon = userService.getUsuariosTransportistasSinFurgon(pageable);
         return ResponseEntity.ok(usuariosTransportistasSinFurgon);
     }
-
+    // se lista solo transportistas con furgon
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/usuarios/transportistas/page")
-    public ResponseEntity<Page<UserProfileResponseDTO>> listarUsuaiosTransportistas(
+    @GetMapping("/usuarios-transportistas/con-furgon/page")
+    public ResponseEntity<Page<UserProfileResponseDTO>> listarTransportistasConFurgon(
             @PageableDefault(size = 5) Pageable pageable
     ){
-        Page<UserProfileResponseDTO> usuariosTransportistas = userService.getUsuariosTransportista(pageable);
-        return ResponseEntity.ok(usuariosTransportistas);
+        Page<UserProfileResponseDTO> usuariosTransportistasConFurgon = userService.getUsuariosTransportistasConFurgon(pageable);
+        return ResponseEntity.ok(usuariosTransportistasConFurgon);
     }
+
+
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios/apoderados/page")
     public ResponseEntity<Page<UserProfileResponseDTO>> listarUsuariosApoderados(
@@ -78,6 +82,16 @@ public class AdminController {
     ){
         Page<UserProfileResponseDTO> usuariosApoderados = userService.getUsuariosApoderados(pageable);
         return ResponseEntity.ok(usuariosApoderados);
+    }
+
+    //ver todos los transportistas
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/usuarios/transportistas/page")
+    public ResponseEntity<Page<UserProfileResponseDTO>> listarUsuariosTransportistas(
+            @PageableDefault(size = 5) Pageable pageable
+    ){
+        Page<UserProfileResponseDTO> usuariosTransportistas = userService.getUsuariosTransportista(pageable);
+        return ResponseEntity.ok(usuariosTransportistas);
     }
 
 

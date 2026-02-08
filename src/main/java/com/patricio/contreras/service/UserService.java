@@ -184,11 +184,19 @@ public class UserService {
 		  return usuarios.map(userMapper::toUserProfileResponseDTO);
 	}
 
+
+
     @Transactional(readOnly = true)
     public Page<UserProfileResponseDTO> getUsuariosTransportistasSinFurgon(Pageable pageable){
         Page<User> usuariosTransportistasSinFurgon = userRepository.transportistasSinFurgon(pageable);
         return usuariosTransportistasSinFurgon.map(userMapper::toUserProfileResponseDTO);
     }
+
+	@Transactional(readOnly = true)
+	public Page<UserProfileResponseDTO> getUsuariosTransportistasConFurgon(Pageable pageable){
+		Page<User> usuariosTransportistasConFurgon =  userRepository.transportistasConFurgon(pageable);
+		return usuariosTransportistasConFurgon.map(userMapper::toUserProfileResponseDTO);
+	}
 
 	@Transactional(readOnly = true)
 	public UserProfileResponseDTO me(){
